@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: fs-auth-server
+  profiles:
+    active: dev

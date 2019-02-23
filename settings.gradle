@@ -1,0 +1,6 @@
+rootProject.name = 'b2b'
+include 'fs-b2b-auth-server'
+include 'auth-server'
+include 'bs-b2b-auth-server'
+include 'util'
+

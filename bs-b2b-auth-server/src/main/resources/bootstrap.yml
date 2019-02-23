@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: bs-auth-server
+  profiles:
+    active: dev

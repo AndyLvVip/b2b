@@ -1,0 +1,30 @@
+= RESTful UCA OAuth API Specification
+
+{project-version}
+
+:doctype: book
+
+== User Register Api
+
+A `POST` request is used to register a new user
+
+operation::user-register[snippets='http-request,request-fields,curl-request,http-response']
+
+== User Login Api
+
+A `POST` request is used to login
+
+operation::user-login[snippets='http-request,request-headers,request-parameters,curl-request,http-response,response-fields']
+
+== User Credential Api
+
+A `GET` request is used to get user credential
+
+operation::user-credential[snippets='http-request,request-headers,curl-request,http-response,response-fields']
+
+
+== User Logout Api
+
+A `POST` request is used to logout
+
+operation::oauth-logout[snippets='http-request,request-headers,curl-request,http-response']
