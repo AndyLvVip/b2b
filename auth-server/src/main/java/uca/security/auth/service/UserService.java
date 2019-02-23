@@ -2,6 +2,7 @@ package uca.security.auth.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import uca.platform.StdStringUtils;
 import uca.security.auth.domain.User;
 import uca.security.auth.repository.UserRepository;
 
@@ -21,7 +22,11 @@ public class UserService {
 
     public void create(User user) {
         User result = new User();
+        result.setId(StdStringUtils.uuid());
         result.setUsername(user.getUsername());
+        result.setName(user.getName());
+        result.setPhone(user.getPhone());
+        result.setEmail(user.getEmail());
         result.setPassword(passwordEncoder.encode(user.getPassword()));
         result.setCreatedOn(LocalDateTime.now());
         userRepository.save(result);

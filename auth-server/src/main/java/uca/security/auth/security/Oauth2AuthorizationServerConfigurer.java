@@ -8,6 +8,7 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import uca.security.auth.Config;
 
 @Configuration
 public class Oauth2AuthorizationServerConfigurer extends AuthorizationServerConfigurerAdapter {
@@ -20,28 +21,28 @@ public class Oauth2AuthorizationServerConfigurer extends AuthorizationServerConf
 
     private final TokenStore tokenStore;
 
+    private final Config config;
+
     public Oauth2AuthorizationServerConfigurer(AuthenticationManager authenticationManagerBean,
                                                UserDetailsService userDetailsServiceBean,
                                                PasswordEncoder passwordEncoder,
-                                               TokenStore tokenStore
+                                               TokenStore tokenStore,
+                                               Config config
     ) {
         this.authenticationManager = authenticationManagerBean;
         this.userDetailsService = userDetailsServiceBean;
         this.passwordEncoder = passwordEncoder;
         this.tokenStore = tokenStore;
+        this.config = config;
     }
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("portal")
-                .secret(passwordEncoder.encode("portal$ecret"))
-                .authorizedGrantTypes(
-                        "refresh_token",
-                        "password",
-                        "client_credential"
-                )
-                .scopes("webclient", "mobileclient")
+                .withClient(config.getClientId())
+                .secret(passwordEncoder.encode(config.getClientSecret()))
+                .authorizedGrantTypes(config.getGrantTypes())
+                .scopes(config.getScopes())
         ;
     }
 

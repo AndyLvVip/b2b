@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
+import uca.platform.StdStringUtils;
 import uca.security.auth.domain.User;
 
 import java.time.LocalDateTime;
@@ -80,24 +81,35 @@ public class UserControllerTest {
         clientDetails.setRefreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECONDS);
         when(clientDetailsService.loadClientByClientId("client-1")).thenReturn(clientDetails);
 
+        User user = dummy();
+        user.setId(StdStringUtils.uuid());
+        user.setCreatedOn(LocalDateTime.now());
+        user.setPassword(passwordEncoder.encode("password"));
+        when(userDetailsService.loadUserByUsername("dummy")).thenReturn(user);
+    }
+
+    private User dummy() {
         User user = new User();
         user.setUsername("dummy");
-        user.setPassword(passwordEncoder.encode("password"));
-        user.setCreatedOn(LocalDateTime.now());
-        when(userDetailsService.loadUserByUsername("dummy")).thenReturn(user);
+        user.setName("Daisy GB");
+        user.setPhone("13800138000");
+        user.setEmail("dummy@email.com");
+        return user;
     }
 
     @Test
     public void userRegister() throws Exception {
-        User dummy = new User();
-        dummy.setUsername("dummy");
+        User dummy = dummy();
         dummy.setPassword("password");
         this.mockMvc.perform(post("/user/register")
                 .contentType(MediaType.APPLICATION_JSON_UTF8).content(mapper.writeValueAsString(dummy)))
                 .andExpect(status().isNoContent())
         .andDo(restDocument(requestFields(
                 fieldWithPath("username").description("Login user name"),
-                fieldWithPath("password").description("Login password")
+                fieldWithPath("name").description("Name of the user"),
+                fieldWithPath("password").description("Login password"),
+                fieldWithPath("phone").description("Login user phone"),
+                fieldWithPath("email").description("Login user email")
         )))
         ;
     }
@@ -196,7 +208,11 @@ public class UserControllerTest {
                         headerWithName("Authorization").description("Bearer token to access protected resource")
                         )
                         , responseFields(
-                                fieldWithPath("user.username").description("Username of the user")
+                                fieldWithPath("user.id").description("Id of the user"),
+                                fieldWithPath("user.username").description("Username of the user"),
+                                fieldWithPath("user.name").description("Name of the user"),
+                                fieldWithPath("user.phone").description("Phone of the user"),
+                                fieldWithPath("user.email").description("Email of the user")
                                 , fieldWithPath("user.createdOn").description("The datetime of the creation")
                         )
                 ));

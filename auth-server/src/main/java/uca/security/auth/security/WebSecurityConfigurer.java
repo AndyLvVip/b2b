@@ -33,10 +33,8 @@ public class WebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     public UserDetailsService userDetailsServiceBean() {
         return username -> {
-            Optional<User> user = userRepository.findById(username);
-            if (user.isPresent())
-                return user.get();
-            return null;
+            User user = userRepository.findByUsernameOrPhoneOrEmail(username, username, username);
+            return user;
         };
     }
 

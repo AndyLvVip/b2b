@@ -21,9 +21,11 @@ public class User implements UserDetails {
 
     @Column
     @Id
-    private String Id;
+    private String id;
     @Column
     private String username;
+    @Column
+    private String name;
     @Column
     private String password;
     @Column

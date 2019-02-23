@@ -1,10 +1,15 @@
 drop table if exists user;
 
 create table user (
+  id varchar(36) not null,
   username varchar(30) not null,
+  name varchar(30) null,
   password char(60) not null,
+  phone char(11) null,
+  email varchar(100) null,
   created_on datetime(3) not null,
-  primary key (username)
+  primary key (username),
+  index idx_username (username)
 ) engine = InnoDb, charset = utf8mb4;
 
 
