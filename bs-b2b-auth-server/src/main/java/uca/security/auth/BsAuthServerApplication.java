@@ -1,6 +1,7 @@
-package uca.security.auth.bs;
+package uca.security.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -39,5 +40,11 @@ public class BsAuthServerApplication {
     @Bean
     TokenStore tokenStore(DataSource datasource) {
         return new JdbcTokenStore(datasource);
+    }
+
+    @Bean
+    public Jackson2JsonMessageConverter jackson2JsonMessageConverter(ObjectMapper objectMapper) {
+        Jackson2JsonMessageConverter jackson2JsonMessageConverter = new Jackson2JsonMessageConverter(objectMapper);
+        return jackson2JsonMessageConverter;
     }
 }
