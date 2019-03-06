@@ -1,0 +1,68 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.2.RELEASE'
+    }
+    repositories {
+        maven { url 'http://artifactory.ucacc.net:8081/artifactory/maven-center/' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id "org.asciidoctor.convert" version "1.5.3"
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+
+group = 'ucacc'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    maven { url 'http://artifactory.ucacc.net:8081/artifactory/maven-center/' }
+    maven { url 'http://artifactory.ucacc.net:8081/artifactory/spring-io-milestone/' }
+}
+
+ext {
+    set('springCloudVersion', 'Greenwich.RC2')
+}
+
+dependencies {
+    implementation project(':auth-client')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'net.logstash.logback:logstash-logback-encoder:5.2'
+    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.3.RELEASE'
+    testCompile 'org.springframework.restdocs:spring-restdocs-mockmvc:2.0.3.RELEASE'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}

@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: authclient
+  profiles:
+    active: dev

@@ -1,0 +1,11 @@
+= RESTful UCA OAuth2 Client API Specification
+
+{project-version}
+
+:doctype: book
+
+== User Login Api
+
+A `POST` request is used to login a new user for client
+
+operation::login[snippets='http-request,request-headers,curl-request,http-response,response-fields']
