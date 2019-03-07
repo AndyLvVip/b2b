@@ -1,11 +1,13 @@
 package uca.auth.client;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import uca.auth.client.config.Config;
+import uca.auth.client.exception.InvalidAccessTokenException;
 import uca.auth.client.service.SecurityService;
 import uca.auth.client.vo.OAuth2TokenVo;
 
@@ -46,14 +48,22 @@ public class AuthClientController {
         return login(this.config.getClient().getMobile(), authorization);
     }
 
-    @PostMapping("/refreshToken")
-    public String refreshToken(String access_token) {
-        return null;
+    @PostMapping("/web/refreshToken")
+    public OAuth2TokenVo webRefreshToken(@RequestHeader("Authorization") String authorization) {
+        return refreshToken(this.config.getClient().getWeb(), authorization);
     }
 
-    @PostMapping("/logout")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void logout(String access_token) {
-
+    @PostMapping("/mobile/refreshToken")
+    public OAuth2TokenVo mobileRefreshToken(@RequestHeader("Authorization") String authorization) {
+        return refreshToken(this.config.getClient().getMobile(), authorization);
     }
+
+    public OAuth2TokenVo refreshToken(Config.Client.Scope scope, String authorization) {
+        if(StringUtils.isEmpty(authorization)) {
+            throw new InvalidAccessTokenException("empty authorization");
+        }
+        String access_token = authorization.replace("Bearer ", "");
+        return this.securityService.refreshToken(scope, access_token);
+    }
+
 }

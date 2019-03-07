@@ -58,7 +58,7 @@ public class AuthClientControllerTest {
     RedisTemplate<String, String> redisTemplate;
 
     @MockBean
-    Config.AuthClient authClient;
+    Config.Client authClient;
 
     @Before
     public void setUp() {
@@ -82,7 +82,9 @@ public class AuthClientControllerTest {
 
         when(authClient.getId()).thenReturn("id");
         when(authClient.getSecret()).thenReturn("secret");
-        when(authClient.getScope()).thenReturn("scope");
+        Config.Client.Scope web = new Config.Client.Scope();
+        web.setName("scope");
+        when(authClient.getWeb()).thenReturn(web);
     }
 
     @Test

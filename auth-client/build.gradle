@@ -34,6 +34,7 @@ ext {
 }
 
 dependencies {
+    implementation project(':util')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.apache.commons:commons-lang3:3.8.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
