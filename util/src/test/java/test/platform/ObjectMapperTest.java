@@ -1,6 +1,5 @@
 package test.platform;
 
-import lombok.Data;
 import org.junit.Test;
 import uca.platform.factory.StdObjectFactory;
 import uca.platform.json.StdObjectMapper;
@@ -13,13 +12,36 @@ import static org.junit.Assert.assertEquals;
 
 public class ObjectMapperTest {
 
-    @Data
     static class AllTypes {
         private LocalDate localDate;
 
         private LocalTime localTime;
 
         private LocalDateTime localDateTime;
+
+        public LocalDate getLocalDate() {
+            return localDate;
+        }
+
+        public void setLocalDate(LocalDate localDate) {
+            this.localDate = localDate;
+        }
+
+        public LocalTime getLocalTime() {
+            return localTime;
+        }
+
+        public void setLocalTime(LocalTime localTime) {
+            this.localTime = localTime;
+        }
+
+        public LocalDateTime getLocalDateTime() {
+            return localDateTime;
+        }
+
+        public void setLocalDateTime(LocalDateTime localDateTime) {
+            this.localDateTime = localDateTime;
+        }
     }
 
     @Test

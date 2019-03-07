@@ -20,7 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.client.RestTemplate;
-import uca.auth.client.config.AppConfiguration;
+import uca.auth.client.config.Config;
 import uca.auth.client.vo.OAuth2TokenVo;
 
 import java.util.Base64;
@@ -58,7 +58,7 @@ public class AuthClientControllerTest {
     RedisTemplate<String, String> redisTemplate;
 
     @MockBean
-    AppConfiguration.AuthClient authClient;
+    Config.AuthClient authClient;
 
     @Before
     public void setUp() {
