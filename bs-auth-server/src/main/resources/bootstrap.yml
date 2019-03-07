@@ -9,4 +9,4 @@ spring:
   profiles: dev
   cloud:
     config:
-      uri: http://192.168.63.195:8888
+      uri: http://192.168.63.195:9888
