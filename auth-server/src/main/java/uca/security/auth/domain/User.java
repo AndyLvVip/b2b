@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,14 +24,17 @@ public class User implements UserDetails {
     @Id
     private String id;
     @Column
+    @NotEmpty
     private String username;
     @Column
     private String name;
     @Column
+    @NotEmpty
     private String password;
     @Column
     private String email;
     @Column
+    @NotEmpty
     private String phone;
     @Column
     private LocalDateTime createdOn;

@@ -1,8 +1,10 @@
-= RESTful UCA OAuth API Specification
+= RESTful UCA OAuth Server API Specification
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
 
 {project-version}
-
-:doctype: book
 
 == User Register Api
 

@@ -10,8 +10,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -42,10 +41,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * on: 2019/1/22 12:36
  */
 @SpringBootTest
-@RunWith(SpringRunner.class)
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
-@Import(CustomizationConfiguration.class)
+@RunWith(SpringRunner.class)
 public class AuthClientControllerTest {
 
     @Autowired
@@ -55,7 +53,7 @@ public class AuthClientControllerTest {
     RestTemplate restTemplate;
 
     @MockBean
-    RedisTemplate<String, String> redisTemplate;
+    StringRedisTemplate stringRedisTemplate;
 
     @MockBean
     Config.Client authClient;
@@ -77,7 +75,7 @@ public class AuthClientControllerTest {
         ).thenReturn(response);
 
         ValueOperations valueOperations = Mockito.mock(ValueOperations.class);
-        when(redisTemplate.opsForValue()).thenReturn(valueOperations);
+        when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         doNothing().when(valueOperations).set(anyString(), anyString());
 
         when(authClient.getId()).thenReturn("id");
@@ -88,8 +86,8 @@ public class AuthClientControllerTest {
     }
 
     @Test
-    public void login() throws Exception {
-        this.mockMvc.perform(post("/login")
+    public void webLogin() throws Exception {
+        this.mockMvc.perform(post("/web/login")
                 .header("Authorization", "Basic " + Base64.getEncoder().encodeToString("dummy:password".getBytes()))
                 .accept(MediaType.APPLICATION_JSON_UTF8)
         ).andExpect(status().isOk())

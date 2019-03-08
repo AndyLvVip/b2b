@@ -1,14 +1,11 @@
 package uca.auth.client;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.http.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import uca.auth.client.config.Config;
 import uca.auth.client.exception.InvalidAccessTokenException;
-import uca.auth.client.service.SecurityService;
 import uca.auth.client.vo.OAuth2TokenVo;
 
 import java.util.Base64;

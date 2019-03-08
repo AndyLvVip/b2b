@@ -1,5 +1,11 @@
 spring:
   application:
-    name: authclient
+    name: fs-auth-client
   profiles:
     active: dev
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      uri: http://192.168.63.195:8888

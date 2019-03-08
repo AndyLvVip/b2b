@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import uca.security.auth.domain.User;
 import uca.security.auth.service.UserService;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +36,7 @@ public class UserController {
 
     @PostMapping("/user/register")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void register(@RequestBody User user) {
+    public void register(@RequestBody @Valid User user) {
         userService.create(user);
     }
 

@@ -6,6 +6,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentationConfigurer;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 import org.springframework.restdocs.snippet.Snippet;
+import org.springframework.stereotype.Component;
 
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 
@@ -13,7 +14,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
  * Created by andy.lv
  * on: 2019/1/19 16:18
  */
-@TestConfiguration
+@Component
 public class CustomizationConfiguration implements RestDocsMockMvcConfigurationCustomizer {
 
     @Override

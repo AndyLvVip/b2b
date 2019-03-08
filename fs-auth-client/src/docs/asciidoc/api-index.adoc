@@ -1,8 +1,10 @@
 = RESTful UCA OAuth2 Client API Specification
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
 
 {project-version}
-
-:doctype: book
 
 == User Login Api
 
