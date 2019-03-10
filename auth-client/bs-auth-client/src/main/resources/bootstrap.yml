@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: bs-auth-client
+  profiles:
+    active: default
+
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      uri: http://192.168.63.195:9888

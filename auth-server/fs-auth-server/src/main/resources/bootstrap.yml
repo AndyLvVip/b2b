@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: fs-auth-server
+  profiles:
+    active: default
+
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      uri: http://192.168.63.195:8888

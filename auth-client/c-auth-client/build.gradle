@@ -1,0 +1,50 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.2.RELEASE'
+    }
+    repositories {
+        maven { url 'http://artifactory.ucacc.net:8081/artifactory/maven-center/' }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+
+group = 'ucacc'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+bootJar.enabled = false
+jar.enabled = true
+
+repositories {
+    maven { url 'http://artifactory.ucacc.net:8081/artifactory/maven-center/' }
+    maven { url 'http://artifactory.ucacc.net:8081/artifactory/spring-io-milestone/' }
+}
+
+ext {
+    set('springCloudVersion', 'Greenwich.RC2')
+}
+
+dependencies {
+    implementation project(':util')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.apache.commons:commons-lang3:3.8.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
