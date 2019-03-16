@@ -1,23 +1,14 @@
-apply plugin: 'java'
-
-group 'ucacc'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
-
-
-
-repositories {
-    maven { url 'http://artifactory.ucacc.net:8081/artifactory/maven-center/' }
-}
+bootJar.enabled = false
+jar.enabled = true
 
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.8'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.8'
-    implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names:2.9.8'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'com.fasterxml.jackson.module:jackson-module-parameter-names'
 
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis:2.1.2.RELEASE'
-    testImplementation 'org.projectlombok:lombok:1.18.4'
-    testImplementation 'junit:junit:4.12'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    testImplementation 'junit:junit'
 }
