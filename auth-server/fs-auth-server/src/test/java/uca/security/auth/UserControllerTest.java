@@ -1,6 +1,5 @@
 package uca.security.auth;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +20,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 import uca.platform.StdStringUtils;
+import uca.platform.json.StdObjectMapper;
 import uca.security.auth.domain.User;
+import uca.security.auth.vo.UserReqVo;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -54,7 +55,7 @@ public class UserControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper mapper;
+    private StdObjectMapper stdObjectMapper;
 
     @MockBean
     private ClientDetailsService clientDetailsService;
@@ -81,15 +82,16 @@ public class UserControllerTest {
         clientDetails.setRefreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECONDS);
         when(clientDetailsService.loadClientByClientId("client-1")).thenReturn(clientDetails);
 
-        User user = dummy();
+        UserReqVo vo = dummy();
+        User user = User.newInstance(vo);
         user.setId(StdStringUtils.uuid());
         user.setCreatedOn(LocalDateTime.now());
         user.setPassword(passwordEncoder.encode("password"));
         when(userDetailsService.loadUserByUsername("dummy")).thenReturn(user);
     }
 
-    private User dummy() {
-        User user = new User();
+    private UserReqVo dummy() {
+        UserReqVo user = new UserReqVo();
         user.setUsername("dummy");
         user.setName("Daisy GB");
         user.setPhone("13800138000");
@@ -99,17 +101,17 @@ public class UserControllerTest {
 
     @Test
     public void userRegister() throws Exception {
-        User dummy = dummy();
+        UserReqVo dummy = dummy();
         dummy.setPassword("password");
         this.mockMvc.perform(post("/user/register")
-                .contentType(MediaType.APPLICATION_JSON_UTF8).content(mapper.writeValueAsString(dummy)))
+                .contentType(MediaType.APPLICATION_JSON_UTF8).content(stdObjectMapper.toJson(dummy)))
                 .andExpect(status().isNoContent())
         .andDo(restDocument(requestFields(
-                fieldWithPath("username").description("Login user name"),
-                fieldWithPath("name").description("Name of the user"),
-                fieldWithPath("password").description("Login password"),
-                fieldWithPath("phone").description("Login user phone"),
-                fieldWithPath("email").description("Login user email")
+                fieldWithPath("username").description("登录用户名"),
+                fieldWithPath("name").optional().description("用户姓名"),
+                fieldWithPath("password").description("登录密码"),
+                fieldWithPath("phone").description("手机号码"),
+                fieldWithPath("email").optional().description("邮箱")
         )))
         ;
     }
@@ -118,20 +120,20 @@ public class UserControllerTest {
     public void userLogin() throws Exception {
         passwordLogin("webclient")
                 .andDo(restDocument(requestHeaders(
-                        headerWithName("Authorization").description("Basic auth credential")
+                        headerWithName("Authorization").description("Basic 鉴权")
                         )
                         , requestParameters(
-                                parameterWithName("username").description("Login username")
-                                , parameterWithName("password").description("Login password")
-                                , parameterWithName("grant_type").description("Grant type")
-                                , parameterWithName("scope").description("Only the specified scope is allowed to be accessed")
+                                parameterWithName("username").description("用户登录名")
+                                , parameterWithName("password").description("登录密码")
+                                , parameterWithName("grant_type").description("授权类型")
+                                , parameterWithName("scope").description("授权范围")
                         ),
                         responseFields(
-                                fieldWithPath("access_token").description("Access with this token")
-                                , fieldWithPath("token_type").description("Type of this token")
-                                , fieldWithPath("refresh_token").description("Use this refresh_token to request a new token")
-                                , fieldWithPath("expires_in").description("Access token will be expires in seconds")
-                                , fieldWithPath("scope").description("The valid scope of the access token")
+                                fieldWithPath("access_token").description("Access token")
+                                , fieldWithPath("token_type").description("token类型")
+                                , fieldWithPath("refresh_token").description("刷新token")
+                                , fieldWithPath("expires_in").description("过期时间")
+                                , fieldWithPath("scope").description("登录范围")
                         )
                 ))
         ;
@@ -205,15 +207,20 @@ public class UserControllerTest {
         )
                 .andExpect(status().isOk())
                 .andDo(restDocument(requestHeaders(
-                        headerWithName("Authorization").description("Bearer token to access protected resource")
+                        headerWithName("Authorization").description("Bearer token")
                         )
                         , responseFields(
-                                fieldWithPath("user.id").description("Id of the user"),
-                                fieldWithPath("user.username").description("Username of the user"),
-                                fieldWithPath("user.name").description("Name of the user"),
-                                fieldWithPath("user.phone").description("Phone of the user"),
-                                fieldWithPath("user.email").description("Email of the user")
-                                , fieldWithPath("user.createdOn").description("The datetime of the creation")
+                                fieldWithPath("user.id").description("用户Id")
+                                , fieldWithPath("user.username").description("用户登录名")
+                                , fieldWithPath("user.name").description("用户姓名")
+                                , fieldWithPath("user.phone").description("用户手机号码")
+                                , fieldWithPath("user.email").description("用户邮箱")
+                                , fieldWithPath("user.createdOn").ignored()
+                                , fieldWithPath("user.enabled").ignored()
+                                , fieldWithPath("user.authorities.[].authority").ignored()
+                                , fieldWithPath("user.credentialsNonExpired").ignored()
+                                , fieldWithPath("user.accountNonExpired").ignored()
+                                , fieldWithPath("user.accountNonLocked").ignored()
                         )
                 ));
     }

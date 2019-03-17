@@ -1,4 +1,6 @@
 = RESTful UCA OAuth Server API Specification
+:sectnums:
+:sectnumlevels:3
 :doctype: book
 :source-highlighter: highlightjs
 :toc: left

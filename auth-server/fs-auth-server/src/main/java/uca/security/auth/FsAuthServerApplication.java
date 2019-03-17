@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 import uca.platform.factory.StdObjectFactory;
+import uca.platform.json.StdObjectMapper;
 
 import javax.sql.DataSource;
 
@@ -36,6 +37,12 @@ public class FsAuthServerApplication {
     ObjectMapper objectMapper() {
         return StdObjectFactory.objectMapper();
     }
+
+    @Bean
+    StdObjectMapper stdObjectMapper(ObjectMapper objectMapper) {
+        return new StdObjectMapper(objectMapper);
+    }
+
 
     @Bean
     TokenStore tokenStore(DataSource datasource) {

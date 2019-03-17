@@ -55,7 +55,7 @@ public class AuthClientController {
         return refreshToken(this.config.getClient().getMobile(), authorization);
     }
 
-    public OAuth2TokenVo refreshToken(Config.Client.Scope scope, String authorization) {
+    private OAuth2TokenVo refreshToken(Config.Client.Scope scope, String authorization) {
         if(StringUtils.isEmpty(authorization)) {
             throw new InvalidAccessTokenException("empty authorization");
         }

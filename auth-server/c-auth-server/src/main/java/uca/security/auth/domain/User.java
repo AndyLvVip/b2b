@@ -4,12 +4,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import uca.security.auth.vo.UserReqVo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,20 +24,27 @@ public class User implements UserDetails {
     @Id
     private String id;
     @Column
-    @NotEmpty
     private String username;
     @Column
     private String name;
     @Column
-    @NotEmpty
     private String password;
     @Column
     private String email;
     @Column
-    @NotEmpty
     private String phone;
     @Column
     private LocalDateTime createdOn;
+
+    public static User newInstance(UserReqVo vo) {
+        User user = new User();
+        user.setPhone(vo.getPhone());
+        user.setEmail(vo.getEmail());
+        user.setName(vo.getName());
+        user.setUsername(vo.getUsername());
+        user.setPassword(vo.getPassword());
+        return user;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

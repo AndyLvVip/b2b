@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.provider.token.ConsumerTokenServices;
 import org.springframework.web.bind.annotation.*;
 import uca.security.auth.domain.User;
 import uca.security.auth.service.UserService;
+import uca.security.auth.vo.UserReqVo;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -36,7 +37,9 @@ public class UserController {
 
     @PostMapping("/user/register")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void register(@RequestBody @Valid User user) {
+    public void register(@RequestBody @Valid UserReqVo vo) {
+        User user = User.newInstance(vo);
+
         userService.create(user);
     }
 
