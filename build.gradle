@@ -5,12 +5,16 @@ plugins {
 configure(
         [
                 project(':util'),
+                project(':common'),
                 project(':auth-client:c-auth-client'),
                 project(':auth-client:bs-auth-client'),
                 project(':auth-client:fs-auth-client'),
                 project(':auth-server:c-auth-server'),
                 project(':auth-server:bs-auth-server'),
-                project(':auth-server:fs-auth-server')
+                project(':auth-server:fs-auth-server'),
+                project(':platform-sys:c-platform-sys'),
+                project(':platform-sys:bs-platform-sys'),
+                project(':platform-sys:fs-platform-sys')
         ]) {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'
