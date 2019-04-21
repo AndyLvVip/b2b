@@ -5,6 +5,9 @@ package jooq.generated.platform.sys;
 
 
 import jooq.generated.platform.sys.tables.Menu;
+import jooq.generated.platform.sys.tables.Permission;
+import jooq.generated.platform.sys.tables.Role;
+import jooq.generated.platform.sys.tables.UserRole;
 
 import javax.annotation.Generated;
 
@@ -26,4 +29,19 @@ public class Tables {
      * The table <code>menu</code>.
      */
     public static final Menu MENU = jooq.generated.platform.sys.tables.Menu.MENU;
+
+    /**
+     * The table <code>permission</code>.
+     */
+    public static final Permission PERMISSION = jooq.generated.platform.sys.tables.Permission.PERMISSION;
+
+    /**
+     * The table <code>role</code>.
+     */
+    public static final Role ROLE = jooq.generated.platform.sys.tables.Role.ROLE;
+
+    /**
+     * The table <code>user_role</code>.
+     */
+    public static final UserRole USER_ROLE = jooq.generated.platform.sys.tables.UserRole.USER_ROLE;
 }

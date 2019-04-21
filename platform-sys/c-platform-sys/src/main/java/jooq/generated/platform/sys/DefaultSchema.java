@@ -5,6 +5,9 @@ package jooq.generated.platform.sys;
 
 
 import jooq.generated.platform.sys.tables.Menu;
+import jooq.generated.platform.sys.tables.Permission;
+import jooq.generated.platform.sys.tables.Role;
+import jooq.generated.platform.sys.tables.UserRole;
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
@@ -28,7 +31,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 1004818987;
+    private static final long serialVersionUID = 227890104;
 
     /**
      * The reference instance of <code></code>
@@ -39,6 +42,21 @@ public class DefaultSchema extends SchemaImpl {
      * The table <code>menu</code>.
      */
     public final Menu MENU = jooq.generated.platform.sys.tables.Menu.MENU;
+
+    /**
+     * The table <code>permission</code>.
+     */
+    public final Permission PERMISSION = jooq.generated.platform.sys.tables.Permission.PERMISSION;
+
+    /**
+     * The table <code>role</code>.
+     */
+    public final Role ROLE = jooq.generated.platform.sys.tables.Role.ROLE;
+
+    /**
+     * The table <code>user_role</code>.
+     */
+    public final UserRole USER_ROLE = jooq.generated.platform.sys.tables.UserRole.USER_ROLE;
 
     /**
      * No further instances allowed
@@ -65,6 +83,9 @@ public class DefaultSchema extends SchemaImpl {
 
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
-            Menu.MENU);
+            Menu.MENU,
+            Permission.PERMISSION,
+            Role.ROLE,
+            UserRole.USER_ROLE);
     }
 }

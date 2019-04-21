@@ -5,7 +5,13 @@ package jooq.generated.platform.sys;
 
 
 import jooq.generated.platform.sys.tables.Menu;
+import jooq.generated.platform.sys.tables.Permission;
+import jooq.generated.platform.sys.tables.Role;
+import jooq.generated.platform.sys.tables.UserRole;
 import jooq.generated.platform.sys.tables.records.MenuRecord;
+import jooq.generated.platform.sys.tables.records.PermissionRecord;
+import jooq.generated.platform.sys.tables.records.RoleRecord;
+import jooq.generated.platform.sys.tables.records.UserRoleRecord;
 import org.jooq.UniqueKey;
 import org.jooq.impl.Internal;
 
@@ -36,6 +42,9 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<MenuRecord> KEY_MENU_PRIMARY = UniqueKeys0.KEY_MENU_PRIMARY;
+    public static final UniqueKey<PermissionRecord> KEY_PERMISSION_PRIMARY = UniqueKeys0.KEY_PERMISSION_PRIMARY;
+    public static final UniqueKey<RoleRecord> KEY_ROLE_PRIMARY = UniqueKeys0.KEY_ROLE_PRIMARY;
+    public static final UniqueKey<UserRoleRecord> KEY_USER_ROLE_PRIMARY = UniqueKeys0.KEY_USER_ROLE_PRIMARY;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -48,5 +57,8 @@ public class Keys {
 
     private static class UniqueKeys0 {
         public static final UniqueKey<MenuRecord> KEY_MENU_PRIMARY = Internal.createUniqueKey(Menu.MENU, "KEY_menu_PRIMARY", Menu.MENU.ID);
+        public static final UniqueKey<PermissionRecord> KEY_PERMISSION_PRIMARY = Internal.createUniqueKey(Permission.PERMISSION, "KEY_permission_PRIMARY", Permission.PERMISSION.ID);
+        public static final UniqueKey<RoleRecord> KEY_ROLE_PRIMARY = Internal.createUniqueKey(Role.ROLE, "KEY_role_PRIMARY", Role.ROLE.ID);
+        public static final UniqueKey<UserRoleRecord> KEY_USER_ROLE_PRIMARY = Internal.createUniqueKey(UserRole.USER_ROLE, "KEY_user_role_PRIMARY", UserRole.USER_ROLE.ID);
     }
 }

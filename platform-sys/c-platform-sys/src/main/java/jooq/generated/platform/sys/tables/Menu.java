@@ -32,7 +32,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Menu extends TableImpl<MenuRecord> {
 
-    private static final long serialVersionUID = -1213896440;
+    private static final long serialVersionUID = -1028139288;
 
     /**
      * The reference instance of <code>menu</code>
@@ -50,7 +50,7 @@ public class Menu extends TableImpl<MenuRecord> {
     /**
      * The column <code>menu.id</code>.
      */
-    public final TableField<MenuRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<MenuRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
      * The column <code>menu.name</code>.
@@ -65,7 +65,7 @@ public class Menu extends TableImpl<MenuRecord> {
     /**
      * The column <code>menu.parent_id</code>.
      */
-    public final TableField<MenuRecord, Integer> PARENT_ID = createField("parent_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<MenuRecord, Long> PARENT_ID = createField("parent_id", org.jooq.impl.SQLDataType.BIGINT, this, "");
 
     /**
      * The column <code>menu.sequence</code>.

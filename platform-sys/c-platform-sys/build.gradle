@@ -52,7 +52,7 @@ jooq {
                 inputSchema = 'platform_sys'
                 outputSchemaToDefault = true
                 recordVersionFields = 'version'
-                includes = 'menu'
+                includes = 'menu|permission|role|user_role'
                 forcedTypes {
                     forcedType {
                         name = 'Integer'
