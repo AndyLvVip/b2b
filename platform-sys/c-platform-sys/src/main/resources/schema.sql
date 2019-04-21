@@ -38,6 +38,7 @@ create table role (
   version int not null
 ) engine = InnoDB, charset = utf8mb4;
 
+
 drop table if exists permission;
 create table permission (
   id char(36) not null primary key ,
@@ -49,4 +50,16 @@ create table permission (
   updated_on datetime(3) not null,
   updated_by varchar(30) not null,
   version int not null
+) engine = InnoDB, charset = utf8mb4;
+
+drop table if exists user_role;
+create table user_role (
+    id char(36) not null primary key ,
+    user_id char(36) not null ,
+    role_id char(36) not null,
+    created_on datetime(3) not null,
+    created_by varchar(30) not null,
+    updated_on datetime(3) not null,
+    updated_by varchar(30) not null,
+    version int not null
 ) engine = InnoDB, charset = utf8mb4;
