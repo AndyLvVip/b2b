@@ -1,9 +1,9 @@
-package wcsc.common.repository;
+package uca.common.repository;
 
 import org.jooq.Configuration;
 import org.jooq.Table;
 import org.jooq.UpdatableRecord;
-import wcsc.common.domain.StdLongDomain;
+import uca.common.domain.StdLongDomain;
 
 public class StdLongRepository<R extends UpdatableRecord<R>, P extends StdLongDomain> extends StdRepository<R, P, Long> {
     protected StdLongRepository(Table<R> table, Class<P> type, Configuration configuration) {

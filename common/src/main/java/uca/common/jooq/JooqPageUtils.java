@@ -1,4 +1,4 @@
-package wcsc.common.jooq;
+package uca.common.jooq;
 
 import org.jooq.Record1;
 import org.jooq.SelectConditionStep;
@@ -29,7 +29,7 @@ public class JooqPageUtils {
                     ;
     }
 
-    public interface Query<T> {
+    public interface Query {
         SelectLimitStep<?> handle();
     }
 

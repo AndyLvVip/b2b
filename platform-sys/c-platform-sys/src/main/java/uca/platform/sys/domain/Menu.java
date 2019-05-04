@@ -3,7 +3,7 @@ package uca.platform.sys.domain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import wcsc.common.domain.StdLongDomain;
+import uca.common.domain.StdLongDomain;
 
 import javax.persistence.Column;
 import java.math.BigDecimal;

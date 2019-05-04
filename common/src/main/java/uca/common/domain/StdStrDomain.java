@@ -1,4 +1,4 @@
-package wcsc.common.domain;
+package uca.common.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,7 +11,7 @@ import javax.persistence.MappedSuperclass;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class StdLongDomain extends StdDomain {
+public class StdStrDomain extends StdDomain {
     @Id
-    private Long id;
+    private String id;
 }

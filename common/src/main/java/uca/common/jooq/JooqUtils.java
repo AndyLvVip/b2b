@@ -1,4 +1,4 @@
-package wcsc.common.jooq;
+package uca.common.jooq;
 
 import org.jooq.ExecuteContext;
 import org.jooq.conf.Settings;

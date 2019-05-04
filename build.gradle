@@ -14,7 +14,10 @@ configure(
                 project(':auth-server:fs-auth-server'),
                 project(':platform-sys:c-platform-sys'),
                 project(':platform-sys:bs-platform-sys'),
-                project(':platform-sys:fs-platform-sys')
+                project(':platform-sys:fs-platform-sys'),
+                project(':corporate:c-corporate'),
+                project(':corporate:bs-corporate'),
+                project(':corporate:fs-corporate')
         ]) {
     apply plugin: 'java'
     apply plugin: 'io.spring.dependency-management'

@@ -1,4 +1,4 @@
-package wcsc.common.domain;
+package uca.common.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

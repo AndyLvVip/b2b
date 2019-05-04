@@ -1,11 +1,11 @@
-package wcsc.common.repository;
+package uca.common.repository;
 
 import org.jooq.Configuration;
 import org.jooq.Table;
 import org.jooq.UpdatableRecord;
 import org.jooq.impl.DAOImpl;
-import wcsc.common.domain.StdDomain;
-import wcsc.util.exception.StdFileNotFoundException;
+import uca.common.domain.StdDomain;
+import uca.platform.exception.StdFileNotFoundException;
 
 import java.time.LocalDateTime;
 

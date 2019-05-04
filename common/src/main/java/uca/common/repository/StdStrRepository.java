@@ -1,10 +1,10 @@
-package wcsc.common.repository;
+package uca.common.repository;
 
 import org.jooq.Configuration;
 import org.jooq.Table;
 import org.jooq.UpdatableRecord;
-import wcsc.common.domain.StdStrDomain;
-import wcsc.util.StdStringUtils;
+import uca.common.domain.StdStrDomain;
+import uca.platform.StdStringUtils;
 
 public class StdStrRepository<R extends UpdatableRecord<R>, P extends StdStrDomain> extends StdRepository<R, P, String> {
 
