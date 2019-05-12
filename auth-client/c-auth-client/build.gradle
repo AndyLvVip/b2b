@@ -1,19 +1,8 @@
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
-
 bootJar.enabled = false
 jar.enabled = true
 
-ext['springCloudVersion'] = 'Greenwich.SR1'
-
 dependencies {
-    implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
-    implementation project(':util')
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.apache.commons:commons-lang3:3.8.1'
-    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-    implementation 'org.springframework.cloud:spring-cloud-starter-config'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
 }

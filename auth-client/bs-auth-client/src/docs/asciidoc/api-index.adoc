@@ -1,0 +1,35 @@
+= RESTful UCA OAuth2 Client API Specification
+:sectnums:
+:sectnumlevels:3
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 1
+
+{project-version}
+
+== Web User Login Api
+
+A `POST` request is used to login a new web user
+
+operation::web-login[snippets='http-request,request-headers,curl-request,http-response,response-fields']
+
+== Mobile User Login Api
+
+A `POST` request is used to login a new mobile user
+
+operation::mobile-login[snippets='http-request,request-headers,curl-request,http-response,response-fields']
+
+
+== Web Refresh Token Api
+
+A `POST` request is used to a new web refresh token
+
+operation::web-refresh-token[snippets='http-request,request-headers,curl-request,http-response,response-fields']
+
+
+== Mobile Refresh Token Api
+
+A `POST` request is used to a new mobile refresh token
+
+operation::mobile-refresh-token[snippets='http-request,request-headers,curl-request,http-response,response-fields']

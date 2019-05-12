@@ -22,6 +22,7 @@ import javax.sql.DataSource;
 @EnableEurekaClient
 @EnableResourceServer
 @EnableAuthorizationServer
+
 public class FsAuthServerApplication {
 
     public static void main(String[] args) {

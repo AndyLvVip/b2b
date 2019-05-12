@@ -1,6 +1,11 @@
 spring:
   application:
     name: fs-auth-server
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: b2b_tx_group
+
   profiles:
     active: default
 

@@ -1,0 +1,22 @@
+subprojects {
+    dependencies {
+        implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+        implementation project(':util')
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
+        implementation 'org.springframework.cloud:spring-cloud-stream'
+        implementation 'org.springframework.cloud:spring-cloud-starter-stream-rabbit'
+        runtimeOnly 'mysql:mysql-connector-java'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+        implementation ("org.springframework.cloud:spring-cloud-alibaba-seata:${springCloudSeataVersion}") {
+            exclude group: 'io.seata', module: 'seata-spring'
+        }
+
+        implementation "io.seata:seata-spring:${seataVersion}"
+    }
+}
