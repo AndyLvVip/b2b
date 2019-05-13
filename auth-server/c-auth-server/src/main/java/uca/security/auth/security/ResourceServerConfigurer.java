@@ -10,9 +10,9 @@ public class ResourceServerConfigurer extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .authorizeRequests()
-                .antMatchers("/user/register")
-                .permitAll()
+                .authorizeRequests().antMatchers("/user/register").permitAll()
+                .and()
+                .authorizeRequests().antMatchers("/actuator/**").permitAll()
                 .and()
                 .authorizeRequests()
                 .anyRequest()
