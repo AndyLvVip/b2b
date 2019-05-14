@@ -4,16 +4,18 @@
 package jooq.generated.platform.sys.tables.records;
 
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+import javax.annotation.Generated;
+
 import jooq.generated.platform.sys.tables.Menu;
+
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record11;
 import org.jooq.Row11;
 import org.jooq.impl.UpdatableRecordImpl;
-
-import javax.annotation.Generated;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 
 /**

@@ -4,18 +4,20 @@
 package jooq.generated.platform.sys;
 
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.annotation.Generated;
+
 import jooq.generated.platform.sys.tables.Menu;
 import jooq.generated.platform.sys.tables.Permission;
 import jooq.generated.platform.sys.tables.Role;
 import jooq.generated.platform.sys.tables.UserRole;
+
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
-
-import javax.annotation.Generated;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 /**

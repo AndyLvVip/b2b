@@ -4,15 +4,16 @@
 package jooq.generated.platform.sys;
 
 
+import javax.annotation.Generated;
+
 import jooq.generated.platform.sys.tables.Menu;
 import jooq.generated.platform.sys.tables.Permission;
 import jooq.generated.platform.sys.tables.Role;
 import jooq.generated.platform.sys.tables.UserRole;
+
 import org.jooq.Index;
 import org.jooq.OrderField;
 import org.jooq.impl.Internal;
-
-import javax.annotation.Generated;
 
 
 /**

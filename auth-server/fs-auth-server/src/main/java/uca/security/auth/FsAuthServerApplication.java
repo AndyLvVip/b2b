@@ -52,7 +52,7 @@ public class FsAuthServerApplication {
     }
 
     @Bean
-    public Jackson2JsonMessageConverter jackson2JsonMessageConverter(ObjectMapper objectMapper) {
+    Jackson2JsonMessageConverter jackson2JsonMessageConverter(ObjectMapper objectMapper) {
         Jackson2JsonMessageConverter jackson2JsonMessageConverter = new Jackson2JsonMessageConverter(objectMapper);
         return jackson2JsonMessageConverter;
     }

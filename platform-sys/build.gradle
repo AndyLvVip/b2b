@@ -1,15 +1,25 @@
-plugins {
-    id 'java'
-}
+subprojects {
+    dependencies {
+        implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+        implementation project(':util')
+        implementation project(':common')
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
+        runtimeOnly 'mysql:mysql-connector-java'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
 
-version 'unspecified'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
-sourceCompatibility = 1.8
+        implementation ("org.springframework.cloud:spring-cloud-alibaba-seata:${springCloudSeataVersion}") {
+            exclude group: 'io.seata', module: 'seata-spring'
+        }
 
-repositories {
-    mavenCentral()
-}
+        implementation "io.seata:seata-spring:${seataVersion}"
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+        implementation "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
+
+        implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    }
 }

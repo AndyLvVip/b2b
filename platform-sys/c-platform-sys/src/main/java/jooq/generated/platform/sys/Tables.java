@@ -4,12 +4,12 @@
 package jooq.generated.platform.sys;
 
 
+import javax.annotation.Generated;
+
 import jooq.generated.platform.sys.tables.Menu;
 import jooq.generated.platform.sys.tables.Permission;
 import jooq.generated.platform.sys.tables.Role;
 import jooq.generated.platform.sys.tables.UserRole;
-
-import javax.annotation.Generated;
 
 
 /**

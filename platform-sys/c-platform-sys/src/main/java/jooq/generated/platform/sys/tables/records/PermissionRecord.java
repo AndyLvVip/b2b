@@ -4,15 +4,17 @@
 package jooq.generated.platform.sys.tables.records;
 
 
+import java.time.LocalDateTime;
+
+import javax.annotation.Generated;
+
 import jooq.generated.platform.sys.tables.Permission;
+
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record9;
 import org.jooq.Row9;
 import org.jooq.impl.UpdatableRecordImpl;
-
-import javax.annotation.Generated;
-import java.time.LocalDateTime;
 
 
 /**

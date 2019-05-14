@@ -4,6 +4,8 @@
 package jooq.generated.platform.sys;
 
 
+import javax.annotation.Generated;
+
 import jooq.generated.platform.sys.tables.Menu;
 import jooq.generated.platform.sys.tables.Permission;
 import jooq.generated.platform.sys.tables.Role;
@@ -12,10 +14,9 @@ import jooq.generated.platform.sys.tables.records.MenuRecord;
 import jooq.generated.platform.sys.tables.records.PermissionRecord;
 import jooq.generated.platform.sys.tables.records.RoleRecord;
 import jooq.generated.platform.sys.tables.records.UserRoleRecord;
+
 import org.jooq.UniqueKey;
 import org.jooq.impl.Internal;
-
-import javax.annotation.Generated;
 
 
 /**
