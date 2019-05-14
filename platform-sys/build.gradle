@@ -21,5 +21,7 @@ subprojects {
         implementation "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
 
         implementation 'org.springframework.boot:spring-boot-starter-jooq'
+
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 }
