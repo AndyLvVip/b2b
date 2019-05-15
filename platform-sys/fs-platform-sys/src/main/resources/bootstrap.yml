@@ -1,12 +1,12 @@
 spring:
   application:
-    name: bs-auth-server
+    name: fs-platform-sys
   profiles:
     active: dev
   cloud:
     alibaba:
       seata:
-        tx-service-group: b2b_bs_tx_group
+        tx-service-group: b2b_fs_tx_group
 management:
   endpoints:
     web:
@@ -17,4 +17,4 @@ spring:
   profiles: dev
   cloud:
     config:
-      uri: http://192.168.63.195:9888
+      uri: http://192.168.63.195:8888

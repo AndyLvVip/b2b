@@ -6,11 +6,15 @@ import lombok.ToString;
 import uca.common.domain.StdLongDomain;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Entity
+@Table(name = "menu")
 public class Menu extends StdLongDomain {
 
     @Column(name = "name")

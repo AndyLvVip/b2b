@@ -6,11 +6,15 @@ import lombok.ToString;
 import uca.common.domain.StdStrDomain;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Entity
+@Table(name = "permission")
 public class Permission extends StdStrDomain {
 
     @Column(name = "role_id")

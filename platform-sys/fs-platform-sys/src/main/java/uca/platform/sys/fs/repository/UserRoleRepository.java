@@ -1,4 +1,4 @@
-package uca.platform.sys.repository;
+package uca.platform.sys.fs.repository;
 
 import jooq.generated.platform.sys.tables.records.UserRoleRecord;
 import org.jooq.Configuration;

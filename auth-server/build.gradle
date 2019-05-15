@@ -21,5 +21,11 @@ subprojects {
         implementation "io.seata:seata-spring:${seataVersion}"
 
         implementation "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
+        implementation 'org.springframework.cloud:spring-cloud-starter-config'
+        implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+        runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+        asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor:${restDocsVersion}"
+        testCompile "org.springframework.restdocs:spring-restdocs-mockmvc:${restDocsVersion}"
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 }

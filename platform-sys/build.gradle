@@ -3,25 +3,36 @@ subprojects {
         implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
         implementation project(':util')
         implementation project(':common')
-        implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
         runtimeOnly 'mysql:mysql-connector-java'
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
 
+        implementation "io.seata:seata-spring:${seataVersion}"
+        implementation "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
+        implementation 'javax.persistence:javax.persistence-api'
+
+        implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+        implementation 'org.springframework.boot:spring-boot-starter-jooq'
+
+
 
         implementation ("org.springframework.cloud:spring-cloud-alibaba-seata:${springCloudSeataVersion}") {
             exclude group: 'io.seata', module: 'seata-spring'
         }
+        implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+        implementation 'org.springframework.cloud:spring-cloud-starter-config'
+        implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+        implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+        implementation 'org.springframework.cloud:spring-cloud-starter-netflix-ribbon'
+        implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+        implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+        runtimeOnly 'org.springframework.boot:spring-boot-devtools'
 
-        implementation "io.seata:seata-spring:${seataVersion}"
-
-        implementation "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
-
-        implementation 'org.springframework.boot:spring-boot-starter-jooq'
-
+        asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor:${restDocsVersion}"
+        
+        testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:${restDocsVersion}"
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 }

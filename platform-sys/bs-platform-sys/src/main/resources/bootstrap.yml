@@ -1,6 +1,6 @@
 spring:
   application:
-    name: bs-auth-server
+    name: bs-platform-sys
   profiles:
     active: dev
   cloud:

@@ -14,9 +14,4 @@ public class StdLongRepository<R extends UpdatableRecord<R>, P extends StdLongDo
     protected Long getId(P object) {
         return object.getId();
     }
-
-    @Override
-    protected void create(P object) {
-        super.create(object);
-    }
 }

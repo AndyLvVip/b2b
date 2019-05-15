@@ -19,9 +19,9 @@ public class StdStrRepository<R extends UpdatableRecord<R>, P extends StdStrDoma
     }
 
     @Override
-    protected void create(P object) {
+    protected void create(P object, String createdBy) {
         if(null == object.getId() || object.getId().isEmpty())
             object.setId(StdStringUtils.uuid());
-        super.create(object);
+        super.create(object, createdBy);
     }
 }

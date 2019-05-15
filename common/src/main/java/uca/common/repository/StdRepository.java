@@ -20,15 +20,17 @@ public abstract class StdRepository<R extends UpdatableRecord<R>, P extends StdD
     }
 
 
-    @Override
-    public void insert(P object) {
-        create(object);
+    public void insert(P object, String createdBy) {
+        create(object, createdBy);
     }
 
-    protected void create(P object) {
+    protected void create(P object, String createdBy) {
         LocalDateTime now = LocalDateTime.now();
         object.setCreatedOn(now);
         object.setUpdatedOn(now);
+        object.setCreatedBy(createdBy);
+        object.setUpdatedBy(createdBy);
+        object.setVersion(1);
         super.insert(object);
     }
 

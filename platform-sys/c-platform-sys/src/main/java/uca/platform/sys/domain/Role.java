@@ -6,10 +6,14 @@ import lombok.ToString;
 import uca.common.domain.StdStrDomain;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
+@Table(name = "role")
+@Entity
 public class Role extends StdStrDomain {
 
     @Column(name = "corporate_id")
@@ -17,4 +21,19 @@ public class Role extends StdStrDomain {
 
     @Column(name = "name")
     private String name;
+
+    public enum Template {
+        /**
+         * 已注册
+         */
+        REGISTER("register"),
+
+        ;
+
+        public final String val;
+
+        Template(String value) {
+            this.val = value;
+        }
+    }
 }
