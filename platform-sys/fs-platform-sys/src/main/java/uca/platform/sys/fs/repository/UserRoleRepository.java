@@ -4,7 +4,7 @@ import jooq.generated.platform.sys.tables.records.UserRoleRecord;
 import org.jooq.Configuration;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
-import uca.common.repository.StdStrRepository;
+import uca.base.repository.StdStrRepository;
 import uca.platform.sys.domain.Permission;
 import uca.platform.sys.domain.UserRole;
 

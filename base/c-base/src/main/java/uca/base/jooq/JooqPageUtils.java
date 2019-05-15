@@ -1,4 +1,4 @@
-package uca.common.jooq;
+package uca.base.jooq;
 
 import org.jooq.Record1;
 import org.jooq.SelectConditionStep;

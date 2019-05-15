@@ -3,7 +3,7 @@ package uca.platform.sys.domain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import uca.common.domain.StdStrDomain;
+import uca.base.domain.StdStrDomain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

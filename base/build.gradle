@@ -1,0 +1,13 @@
+subprojects {
+    dependencies {
+        implementation project(':util')
+        implementation 'org.jooq:jooq'
+        annotationProcessor 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
+        implementation 'javax.persistence:javax.persistence-api'
+        implementation 'org.springframework.data:spring-data-commons'
+    }
+    
+    bootJar.enabled=false
+    jar.enabled=true
+}

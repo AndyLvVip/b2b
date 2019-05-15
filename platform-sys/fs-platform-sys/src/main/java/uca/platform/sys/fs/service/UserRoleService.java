@@ -1,7 +1,7 @@
 package uca.platform.sys.fs.service;
 
 import org.springframework.stereotype.Service;
-import uca.common.constant.Constants;
+import uca.base.constant.Constants;
 import uca.platform.sys.domain.UserRole;
 import uca.platform.sys.fs.repository.UserRoleRepository;
 

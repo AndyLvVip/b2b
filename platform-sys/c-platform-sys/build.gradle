@@ -1,6 +1,3 @@
-plugins {
-    id 'nu.studer.jooq' version '3.0.3'
-}
 version '1.0-SNAPSHOT'
 
 bootJar.enabled = false

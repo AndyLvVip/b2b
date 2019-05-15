@@ -1,10 +1,10 @@
-package uca.common.repository;
+package uca.base.repository;
 
 import org.jooq.Configuration;
 import org.jooq.Table;
 import org.jooq.UpdatableRecord;
 import org.jooq.impl.DAOImpl;
-import uca.common.domain.StdDomain;
+import uca.base.domain.StdDomain;
 import uca.platform.exception.StdFileNotFoundException;
 
 import java.time.LocalDateTime;

@@ -1,4 +1,4 @@
-package uca.common.jooq;
+package uca.base.jooq;
 
 import org.jooq.ExecuteContext;
 import org.jooq.conf.Settings;

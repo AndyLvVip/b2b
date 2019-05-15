@@ -1,4 +1,4 @@
-package uca.common.constant;
+package uca.base.constant;
 
 /**
  * Description:

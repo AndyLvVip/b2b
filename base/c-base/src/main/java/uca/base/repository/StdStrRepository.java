@@ -1,9 +1,9 @@
-package uca.common.repository;
+package uca.base.repository;
 
 import org.jooq.Configuration;
 import org.jooq.Table;
 import org.jooq.UpdatableRecord;
-import uca.common.domain.StdStrDomain;
+import uca.base.domain.StdStrDomain;
 import uca.platform.StdStringUtils;
 
 public class StdStrRepository<R extends UpdatableRecord<R>, P extends StdStrDomain> extends StdRepository<R, P, String> {
