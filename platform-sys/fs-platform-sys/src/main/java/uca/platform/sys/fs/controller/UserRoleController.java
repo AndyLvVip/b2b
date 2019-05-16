@@ -1,11 +1,11 @@
 package uca.platform.sys.fs.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+import uca.platform.sys.domain.Permission;
 import uca.platform.sys.fs.service.UserRoleService;
+
+import java.util.List;
 
 /**
  * Description:
@@ -13,7 +13,7 @@ import uca.platform.sys.fs.service.UserRoleService;
  * @author andy.lv
  * @date 2019/5/15 9:39
  */
-@Controller
+@RestController
 public class UserRoleController {
 
     private final UserRoleService userRoleService;
@@ -28,4 +28,9 @@ public class UserRoleController {
         this.userRoleService.linkUserRole(userId, roleId);
     }
 
+
+    @GetMapping("/permission/user/{userId}")
+    public List<Permission> fetchAllPermissionList(@PathVariable("userId") String userId) {
+        return this.userRoleService.fetchAllPermissionList(userId);
+    }
 }

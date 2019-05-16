@@ -21,7 +21,7 @@ public class Permission extends StdStrDomain {
     private String roleId;
 
     @Column(name = "menu_id")
-    private String menuId;
+    private Long menuId;
 
     @Column(name = "permission")
     private Long permission;
