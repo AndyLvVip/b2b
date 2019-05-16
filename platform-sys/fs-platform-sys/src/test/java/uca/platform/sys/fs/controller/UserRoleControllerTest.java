@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import uca.base.user.StdUser;
+import uca.base.user.StdSimpleUser;
 import uca.platform.StdStringUtils;
 import uca.platform.sys.CustomizationConfiguration;
 import uca.platform.sys.domain.Permission;
@@ -86,25 +86,24 @@ public class UserRoleControllerTest {
         String userId = StdStringUtils.uuid();
         doReturn(Arrays.asList(permission)).when(userRoleService).fetchAllPermissionList(userId);
         String accessToken = StdStringUtils.uuid();
-        Map<String, StdUser> body = new HashMap<>();
-        StdUser stdUser = new StdUser();
+        Map<String, StdSimpleUser> body = new HashMap<>();
+        StdSimpleUser stdUser = new StdSimpleUser();
+        stdUser.setId(userId);
         stdUser.setName("Andy Lv");
         stdUser.setUsername("andy");
+
         body.put("user", stdUser);
-        ResponseEntity<Map<String, StdUser>> entity = new ResponseEntity(body, HttpStatus.OK);
+        ResponseEntity<Map<String, StdSimpleUser>> entity = new ResponseEntity(body, HttpStatus.OK);
 
         doReturn(entity).when(restTemplate).getForEntity(anyString(), any(Class.class));
         userInfoTokenServices.setRestTemplate(restTemplate);
 
-        this.mockMvc.perform(get("/permission/user/{userId}", userId)
+        this.mockMvc.perform(get("/permission/user/")
                 .header("Authorization", "Bearer " + accessToken)
         )
                 .andExpect(status().isOk())
                 .andDo(restDocument(
-                        pathParameters(
-                                parameterWithName("userId").description("用户id")
-                        )
-                        , responseFields(
+                        responseFields(
                                 fieldWithPath("[].menuId").description("菜单id")
                                 , fieldWithPath("[].permission").description("对该菜单拥有的权限总和")
                         )

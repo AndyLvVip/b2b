@@ -13,15 +13,7 @@ import java.util.List;
 @Data
 public class StdUser {
 
-    private String id;
-
-    private String username;
-
-    private String name;
-
-    private String phone;
-
-    private String email;
+    private StdSimpleUser stdSimpleUser;
 
     private StdCorporate stdCorporate;
 

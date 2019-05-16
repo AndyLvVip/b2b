@@ -1,7 +1,9 @@
 package uca.platform.sys.fs.controller;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import uca.base.user.StdSimpleUser;
 import uca.platform.sys.domain.Permission;
 import uca.platform.sys.fs.service.UserRoleService;
 
@@ -29,8 +31,8 @@ public class UserRoleController {
     }
 
 
-    @GetMapping("/permission/user/{userId}")
-    public List<Permission> fetchAllPermissionList(@PathVariable("userId") String userId) {
-        return this.userRoleService.fetchAllPermissionList(userId);
+    @GetMapping("/permission/user")
+    public List<Permission> fetchAllPermissionList(@AuthenticationPrincipal StdSimpleUser stdSimpleUser) {
+        return this.userRoleService.fetchAllPermissionList(stdSimpleUser.getId());
     }
 }
