@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: fs-corporate
+  profiles:
+    active: dev
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: b2b_fs_tx_group
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      uri: http://192.168.63.195:8888

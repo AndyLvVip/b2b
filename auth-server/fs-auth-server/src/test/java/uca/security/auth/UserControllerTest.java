@@ -19,10 +19,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
+import uca.base.user.StdSimpleUser;
 import uca.platform.StdStringUtils;
 import uca.platform.json.StdObjectMapper;
 import uca.security.auth.domain.User;
-import uca.security.auth.vo.UserReqVo;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -82,7 +82,7 @@ public class UserControllerTest {
         clientDetails.setRefreshTokenValiditySeconds(REFRESH_TOKEN_VALIDITY_SECONDS);
         when(clientDetailsService.loadClientByClientId("client-1")).thenReturn(clientDetails);
 
-        UserReqVo vo = dummy();
+        StdSimpleUser vo = dummy();
         User user = User.newInstance(vo);
         user.setId(StdStringUtils.uuid());
         user.setCreatedOn(LocalDateTime.now());
@@ -90,8 +90,8 @@ public class UserControllerTest {
         when(userDetailsService.loadUserByUsername("dummy")).thenReturn(user);
     }
 
-    private UserReqVo dummy() {
-        UserReqVo user = new UserReqVo();
+    private StdSimpleUser dummy() {
+        StdSimpleUser user = new StdSimpleUser();
         user.setUsername("dummy");
         user.setName("Daisy GB");
         user.setPhone("13800138000");
@@ -101,12 +101,14 @@ public class UserControllerTest {
 
     @Test
     public void userRegister() throws Exception {
-        UserReqVo dummy = dummy();
+        StdSimpleUser dummy = dummy();
+        dummy.setId(StdStringUtils.uuid());
         dummy.setPassword("password");
         this.mockMvc.perform(post("/user/register")
                 .contentType(MediaType.APPLICATION_JSON_UTF8).content(stdObjectMapper.toJson(dummy)))
                 .andExpect(status().isNoContent())
         .andDo(restDocument(requestFields(
+                fieldWithPath("id").description("用户id"),
                 fieldWithPath("username").description("登录用户名"),
                 fieldWithPath("name").optional().description("用户姓名"),
                 fieldWithPath("password").description("登录密码"),

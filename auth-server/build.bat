@@ -1,4 +1,4 @@
-..\gradlew.bat ^
-    c-auth-server:build ^
-    bs-auth-server:build ^
-    fs-auth-server:build
+gradlew.bat ^
+    auth-server:c-auth-server:build ^
+    auth-server:bs-auth-server:build ^
+    auth-server:fs-auth-server:build

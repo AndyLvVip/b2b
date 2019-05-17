@@ -5,7 +5,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import uca.platform.StdStringUtils;
+import org.springframework.transaction.annotation.Transactional;
 import uca.security.auth.domain.User;
 import uca.security.auth.mq.UserStream;
 import uca.security.auth.repository.UserRepository;
@@ -27,9 +27,10 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public void create(User user) {
         User result = new User();
-        result.setId(StdStringUtils.uuid());
+        result.setId(user.getId());
         result.setUsername(user.getUsername());
         result.setName(user.getName());
         result.setPhone(user.getPhone());
@@ -37,6 +38,9 @@ public class UserService {
         result.setPassword(passwordEncoder.encode(user.getPassword()));
         result.setCreatedOn(LocalDateTime.now());
         userRepository.save(result);
+        if("exception".equals(result.getUsername())) {
+            throw new RuntimeException("Seata Global Transaction Rollback.");
+        }
     }
 
     @StreamListener(UserStream.INPUT_CHANGE_PHONE)

@@ -38,6 +38,13 @@ jooq {
                 includes = 'corporate|user'
                 forcedTypes {
                     forcedType {
+                        name = 'Boolean'
+                        expression = 'corporate\\.corporate\\.active|corporate\\.corporate\\.verified|corporate\\.user\\.enabled'
+                        types = 'tinyint'
+                    }
+                }
+                forcedTypes {
+                    forcedType {
                         name = 'Integer'
                         types = 'tinyint'
                     }

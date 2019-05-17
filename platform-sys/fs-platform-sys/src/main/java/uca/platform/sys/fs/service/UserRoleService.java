@@ -1,6 +1,7 @@
 package uca.platform.sys.fs.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import uca.base.constant.Constants;
 import uca.platform.sys.domain.Permission;
 import uca.platform.sys.domain.UserRole;
@@ -23,6 +24,7 @@ public class UserRoleService {
         this.userRoleRepository = userRoleRepository;
     }
 
+    @Transactional
     public void linkUserRole(String userId, String roleId) {
         UserRole userRole = new UserRole();
         userRole.setUserId(userId);

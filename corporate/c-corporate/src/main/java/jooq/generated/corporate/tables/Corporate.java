@@ -31,7 +31,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Corporate extends TableImpl<CorporateRecord> {
 
-    private static final long serialVersionUID = 426881842;
+    private static final long serialVersionUID = 2070191644;
 
     /**
      * The reference instance of <code>corporate</code>
@@ -87,14 +87,14 @@ public class Corporate extends TableImpl<CorporateRecord> {
     public final TableField<CorporateRecord, String> ADDRESS_ID = createField("address_id", org.jooq.impl.SQLDataType.CHAR(36), this, "");
 
     /**
-     * The column <code>corporate.status</code>.
+     * The column <code>corporate.verified</code>.
      */
-    public final TableField<CorporateRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<CorporateRecord, Boolean> VERIFIED = createField("verified", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>corporate.active</code>.
      */
-    public final TableField<CorporateRecord, Integer> ACTIVE = createField("active", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<CorporateRecord, Boolean> ACTIVE = createField("active", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>corporate.last_role_id</code>.

@@ -5,12 +5,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoRestTemplateFactory;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -19,6 +19,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import uca.base.user.StdSimpleUser;
 import uca.platform.factory.StdObjectFactory;
 import uca.platform.json.StdObjectMapper;
+
+import static uca.base.constant.Constants.USER;
 
 /**
  * Created by Andy Lv on 2019/5/4
@@ -38,6 +40,12 @@ public class FsPlatformSysApplication {
     }
 
     @Bean
+    public OAuth2FeignRequestInterceptor oAuth2FeignRequestInterceptor(OAuth2ClientContext oAuth2ClientContext,
+                                                                       OAuth2ProtectedResourceDetails details) {
+        return new OAuth2FeignRequestInterceptor(oAuth2ClientContext, details);
+    }
+
+    @Bean
     ObjectMapper objectMapper() {
         return StdObjectFactory.objectMapper();
     }
@@ -49,17 +57,17 @@ public class FsPlatformSysApplication {
 
     @Bean
     PrincipalExtractor principalExtractor(ObjectMapper objectMapper) {
-        return map -> objectMapper.convertValue(map, StdSimpleUser.class);
+        return map -> objectMapper.convertValue(map.get(USER), StdSimpleUser.class);
     }
 
     @Bean
     public UserInfoTokenServices userInfoTokenServices(ResourceServerProperties sso
-            , UserInfoRestTemplateFactory restTemplateFactory
-                                                       , PrincipalExtractor principalExtractor
+            , OAuth2RestTemplate restTemplate
+            , PrincipalExtractor principalExtractor
     ) {
         UserInfoTokenServices services = new UserInfoTokenServices(
                 sso.getUserInfoUri(), sso.getClientId());
-        services.setRestTemplate(restTemplateFactory.getUserInfoRestTemplate());
+        services.setRestTemplate(restTemplate);
         services.setTokenType(sso.getTokenType());
         services.setPrincipalExtractor(principalExtractor);
         return services;

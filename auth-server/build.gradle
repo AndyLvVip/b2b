@@ -2,6 +2,7 @@ subprojects {
     dependencies {
         implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
         implementation project(':util')
+        implementation project(':base:c-base')
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
         implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
@@ -23,6 +24,9 @@ subprojects {
         implementation "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
         implementation 'org.springframework.cloud:spring-cloud-starter-config'
         implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+        implementation 'org.apache.commons:commons-lang3'
+        
         runtimeOnly 'org.springframework.boot:spring-boot-devtools'
         asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor:${restDocsVersion}"
         testCompile "org.springframework.restdocs:spring-restdocs-mockmvc:${restDocsVersion}"

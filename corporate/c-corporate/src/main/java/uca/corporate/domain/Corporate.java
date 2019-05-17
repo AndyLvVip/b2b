@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import uca.base.domain.StdStrDomain;
+import uca.base.fs.constant.RoleTemplate;
+import uca.base.user.StdCorporate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,12 +42,52 @@ public class Corporate extends StdStrDomain {
     @Column(name = "address_id")
     private String addressId;
 
-    @Column(name = "status")
-    private Integer status;
+    @Column(name = "verified")
+    private Boolean verified;
 
     @Column(name = "active")
     private Boolean active;
 
     @Column(name = "last_role_id")
     private String lastRoleId;
+
+    public static Corporate newInstance(String name) {
+        Corporate corporate = new Corporate();
+        corporate.setName(name);
+        corporate.setType(Type.UNKNOWN.val);
+        corporate.setVerified(false);
+        corporate.setActive(true);
+        corporate.setLastRoleId(RoleTemplate.REGISTER.val);
+        return corporate;
+    }
+
+    public enum Type {
+        /**
+         * 未知类型
+         */
+        UNKNOWN(1),
+        /**
+         * 个人类型
+         */
+        PERSON(2),
+        /**
+         * 企业类型
+         */
+        COMPANY(3),
+        ;
+
+        public final int val;
+
+        Type(int value) {
+            this.val = value;
+        }
+    }
+
+    public StdCorporate toStdCorporate() {
+        StdCorporate stdCorporate = new StdCorporate();
+        stdCorporate.setId(getId());
+        stdCorporate.setName(getName());
+        stdCorporate.setType(getType());
+        return stdCorporate;
+    }
 }

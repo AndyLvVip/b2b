@@ -31,7 +31,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User extends TableImpl<UserRecord> {
 
-    private static final long serialVersionUID = 1972447668;
+    private static final long serialVersionUID = 23886777;
 
     /**
      * The reference instance of <code>user</code>
@@ -82,9 +82,9 @@ public class User extends TableImpl<UserRecord> {
     public final TableField<UserRecord, String> QQ = createField("qq", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * The column <code>user.status</code>.
+     * The column <code>user.enabled</code>.
      */
-    public final TableField<UserRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<UserRecord, Boolean> ENABLED = createField("enabled", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false), this, "");
 
     /**
      * The column <code>user.created_on</code>.

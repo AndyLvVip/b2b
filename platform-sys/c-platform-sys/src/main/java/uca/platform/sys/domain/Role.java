@@ -22,18 +22,4 @@ public class Role extends StdStrDomain {
     @Column(name = "name")
     private String name;
 
-    public enum Template {
-        /**
-         * 已注册
-         */
-        REGISTER("register"),
-
-        ;
-
-        public final String val;
-
-        Template(String value) {
-            this.val = value;
-        }
-    }
 }

@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import uca.security.auth.vo.UserReqVo;
+import uca.base.user.StdSimpleUser;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,8 +36,9 @@ public class User implements UserDetails {
     @Column
     private LocalDateTime createdOn;
 
-    public static User newInstance(UserReqVo vo) {
+    public static User newInstance(StdSimpleUser vo) {
         User user = new User();
+        user.setId(vo.getId());
         user.setPhone(vo.getPhone());
         user.setEmail(vo.getEmail());
         user.setName(vo.getName());

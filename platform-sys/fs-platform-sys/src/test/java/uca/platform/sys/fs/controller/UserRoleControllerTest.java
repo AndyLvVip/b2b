@@ -15,11 +15,11 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import uca.base.fs.constant.RoleTemplate;
 import uca.base.user.StdSimpleUser;
 import uca.platform.StdStringUtils;
 import uca.platform.sys.CustomizationConfiguration;
 import uca.platform.sys.domain.Permission;
-import uca.platform.sys.domain.Role;
 import uca.platform.sys.fs.service.UserRoleService;
 
 import java.util.Arrays;
@@ -36,6 +36,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static uca.base.constant.Constants.USER;
 import static uca.platform.sys.CustomizationConfiguration.restDocument;
 
 /**
@@ -67,7 +68,7 @@ public class UserRoleControllerTest {
     @Test
     public void linkUserRole() throws Exception {
         String userId = StdStringUtils.uuid();
-        this.mockMvc.perform(post("/public/linkUserRole/{userId}/{roleId}", userId, Role.Template.REGISTER.val))
+        this.mockMvc.perform(post("/public/linkUserRole/{userId}/{roleId}", userId, RoleTemplate.REGISTER.val))
                 .andExpect(status().isNoContent())
                 .andDo(restDocument(
                         pathParameters(
@@ -92,7 +93,7 @@ public class UserRoleControllerTest {
         stdUser.setName("Andy Lv");
         stdUser.setUsername("andy");
 
-        body.put("user", stdUser);
+        body.put(USER, stdUser);
         ResponseEntity<Map<String, StdSimpleUser>> entity = new ResponseEntity(body, HttpStatus.OK);
 
         doReturn(entity).when(restTemplate).getForEntity(anyString(), any(Class.class));

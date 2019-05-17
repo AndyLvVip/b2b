@@ -5,7 +5,9 @@ subprojects {
         annotationProcessor 'org.projectlombok:lombok'
         compileOnly 'org.projectlombok:lombok'
         implementation 'javax.persistence:javax.persistence-api'
+        implementation 'javax.validation:validation-api'
         implementation 'org.springframework.data:spring-data-commons'
+        implementation 'org.apache.commons:commons-lang3'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
     

@@ -56,11 +56,11 @@ create table permission (
 ) engine = InnoDB, charset = utf8mb4;
 
 insert into permission(id, role_id, menu_id, permission, created_on, created_by, updated_on, updated_by, version)
-values(uuid(), 'register', 2, 2 * 3 * 5 * 7, now(), 'admin', now(), 'admin', 1),
-      (uuid(), 'register', 3, 2 * 3 * 5 * 7, now(), 'admin', now(), 'admin', 1),
-      (uuid(), 'register', 4, 2 * 3 * 5 * 7, now(), 'admin', now(), 'admin', 1),
-      (uuid(), 'register', 5, 2 * 3 * 5 * 7, now(), 'admin', now(), 'admin', 1),
-      (uuid(), 'register', 6, 2 * 3 * 5 * 7, now(), 'admin', now(), 'admin', 1)
+values(uuid(), 'register', 2, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1),
+      (uuid(), 'register', 3, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1),
+      (uuid(), 'register', 4, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1),
+      (uuid(), 'register', 5, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1),
+      (uuid(), 'register', 6, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1)
       ;
 
 drop table if exists user_role;

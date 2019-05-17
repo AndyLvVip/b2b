@@ -3,6 +3,7 @@ subprojects {
         implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
         implementation project(':util')
         implementation project(':base:c-base')
+        implementation project(':base:fs-base')
         runtimeOnly 'mysql:mysql-connector-java'
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
