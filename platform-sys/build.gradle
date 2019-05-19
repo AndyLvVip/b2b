@@ -4,7 +4,7 @@ subprojects {
         implementation project(':util')
         implementation project(':base:c-base')
         implementation project(':base:fs-base')
-        runtimeOnly 'mysql:mysql-connector-java'
+        runtimeOnly "mysql:mysql-connector-java:${mysqlConnectorVersion}"
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
 
@@ -12,11 +12,13 @@ subprojects {
         implementation "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
         implementation 'javax.persistence:javax.persistence-api'
 
+        implementation "com.alibaba:druid-spring-boot-starter:${druidSpringBootVersion}"
+
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
-        implementation 'org.springframework.boot:spring-boot-starter-jooq'
-
-
+        implementation ('org.springframework.boot:spring-boot-starter-jooq') {
+            exclude group: 'com.zaxxer', module: 'HikariCP'
+        }
 
         implementation ("org.springframework.cloud:spring-cloud-alibaba-seata:${springCloudSeataVersion}") {
             exclude group: 'io.seata', module: 'seata-spring'

@@ -2,11 +2,14 @@ spring:
   application:
     name: fs-auth-server
   profiles:
-    active: dev
+    active: default
   cloud:
     alibaba:
       seata:
         tx-service-group: b2b_fs_tx_group
+  datasource:
+    druid:
+      default-transaction-isolation: 2
 management:
   endpoints:
     web:

@@ -1,6 +1,7 @@
 package uca.base.jooq;
 
 import org.jooq.ExecuteContext;
+import org.jooq.conf.RenderNameStyle;
 import org.jooq.conf.Settings;
 import org.jooq.impl.DefaultExecuteListener;
 
@@ -11,7 +12,10 @@ import org.jooq.impl.DefaultExecuteListener;
 public class JooqUtils {
 
     public static Settings settings() {
-        return new Settings().withExecuteWithOptimisticLocking(true).withExecuteWithOptimisticLockingExcludeUnversioned(true);
+        return new Settings()
+                .withRenderNameStyle(RenderNameStyle.AS_IS)
+                .withExecuteWithOptimisticLocking(true)
+                .withExecuteWithOptimisticLockingExcludeUnversioned(true);
     }
 
 

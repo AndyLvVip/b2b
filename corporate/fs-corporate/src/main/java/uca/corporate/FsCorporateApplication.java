@@ -1,12 +1,16 @@
 package uca.corporate;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.RequestTemplate;
+import io.seata.rm.datasource.DataSourceProxy;
+import org.jooq.conf.Settings;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.PrincipalExtractor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -14,12 +18,14 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import uca.base.jooq.JooqUtils;
 import uca.base.user.StdSimpleUser;
 import uca.corporate.fs.service.UserService;
 import uca.platform.factory.StdObjectFactory;
@@ -89,6 +95,24 @@ public class FsCorporateApplication {
         services.setTokenType(sso.getTokenType());
         services.setPrincipalExtractor(principalExtractor);
         return services;
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "spring.datasource")
+    public DruidDataSource druidDataSource() {
+        DruidDataSource druidDataSource = new DruidDataSource();
+        return druidDataSource;
+    }
+
+    @Primary
+    @Bean("dataSource")
+    public DataSourceProxy dataSource(DruidDataSource druidDataSource) {
+        return new DataSourceProxy(druidDataSource);
+    }
+
+    @Bean
+    public Settings settings() {
+        return JooqUtils.settings();
     }
 
     public static void main(String[] args) {
