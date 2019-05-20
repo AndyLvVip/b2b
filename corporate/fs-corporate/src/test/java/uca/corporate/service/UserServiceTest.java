@@ -29,11 +29,9 @@ public class UserServiceTest {
 
     @Test
     public void register() {
-//        doNothing().when(platformSysFeignClient).linkUserRole(anyString(), anyString());
-//        doNothing().when(authServerFeignClient).register(any(StdSimpleUser.class));
         StdSimpleUser stdSimpleUser = new StdSimpleUser();
         stdSimpleUser.setName("User Service Test");
-        stdSimpleUser.setUsername("userServiceTest");
+        stdSimpleUser.setUsername("exception");
         stdSimpleUser.setPhone("13800138000");
         stdSimpleUser.setPassword("password");
         userService.register(stdSimpleUser);

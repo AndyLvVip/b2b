@@ -20,16 +20,16 @@ subprojects {
         logstashLogbackEncoderVersion = '5.2'
         seataVersion = '0.5.1'
         springCloudSeataVersion = '0.9.1.BUILD-SNAPSHOT'
-        mysqlConnectorVersion = '5.1.31'
+        mysqlConnectorVersion = '8.0.15'
         druidSpringBootVersion = '1.1.10'
     }
 
     repositories {
-        maven { url 'http://127.0.0.1:8081/artifactory/maven-center/' }
-        maven { url 'http://127.0.0.1:8081/artifactory/spring-io-milestone/' }
-        maven { url 'http://127.0.0.1:8081/artifactory/uca-resp/' }
-        maven { url 'http://127.0.0.1:8081/artifactory/gradle-plugins/' }
-        maven { url 'http://127.0.0.1:8081/artifactory/spring-snapshot/' }
+        maven { url 'http://192.168.63.195:8081/artifactory/maven-center/' }
+        maven { url 'http://192.168.63.195:8081/artifactory/spring-io-milestone/' }
+        maven { url 'http://192.168.63.195:8081/artifactory/uca-resp/' }
+        maven { url 'http://192.168.63.195:8081/artifactory/gradle-plugins/' }
+        maven { url 'http://192.168.63.195:8081/artifactory/spring-snapshot/' }
     }
 
 }

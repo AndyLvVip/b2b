@@ -2,13 +2,13 @@ spring:
   application:
     name: fs-corporate
   profiles:
-    active: default
+    active: dev
   cloud:
     alibaba:
       seata:
         tx-service-group: b2b_fs_tx_group
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       default-transaction-isolation: 2
 management:
