@@ -1,5 +1,6 @@
 package uca.base.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,15 +18,19 @@ import java.time.LocalDateTime;
 public class StdDomain {
 
     @Column(name = "created_on")
+    @JsonIgnore
     private LocalDateTime createdOn;
 
     @Column(name = "updated_on")
+    @JsonIgnore
     private LocalDateTime updatedOn;
 
     @Column(name = "created_by")
+    @JsonIgnore
     private String createdBy;
 
     @Column(name = "updated_by")
+    @JsonIgnore
     private String updatedBy;
 
     @Column(name = "version")

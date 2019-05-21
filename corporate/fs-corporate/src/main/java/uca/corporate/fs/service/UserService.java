@@ -61,6 +61,13 @@ public class UserService {
         return stdUser;
     }
 
+    public User fetchUserDetailWithCorporate(String userId) {
+        User user = userRepository.forceFindById(userId);
+        Corporate corporate = corporateRepository.forceFindById(user.getMemberOf());
+        user.setCorporate(corporate);
+        return user;
+    }
+
     private User create(StdSimpleUser simpleUser, String memberOf) {
         User user = User.newInstance(simpleUser, memberOf);
         userRepository.insert(user, SYSTEM);

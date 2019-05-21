@@ -45,7 +45,7 @@ import static uca.platform.sys.CustomizationConfiguration.restDocument;
  * @author andy.lv
  * @date 2019/5/15 10:31
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 @Import(CustomizationConfiguration.class)
@@ -110,5 +110,6 @@ public class UserRoleControllerTest {
                         )
                 ))
         ;
+
     }
 }

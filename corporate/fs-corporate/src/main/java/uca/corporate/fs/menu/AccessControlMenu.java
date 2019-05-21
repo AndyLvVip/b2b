@@ -12,6 +12,8 @@ import uca.base.menu.BaseMenu;
 @Component
 public class AccessControlMenu {
 
+    public static final BaseInfoMenu BASE_INFO_MENU = new BaseInfoMenu();
+
     public static class BaseInfoMenu extends BaseMenu {
 
         @Override

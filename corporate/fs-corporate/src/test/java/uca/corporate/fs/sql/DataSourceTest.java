@@ -1,4 +1,4 @@
-package uca.corporate.sql;
+package uca.corporate.fs.sql;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

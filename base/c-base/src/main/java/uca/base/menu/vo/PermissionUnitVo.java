@@ -3,7 +3,6 @@ package uca.base.menu.vo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import uca.platform.BitUtils;
 
 /**
  * Description:
@@ -16,13 +15,13 @@ import uca.platform.BitUtils;
 @NoArgsConstructor
 public class PermissionUnitVo {
 
-    public static final PermissionUnitVo VIEW = new PermissionUnitVo("查看", BitUtils.bitValue(0));
+    public static final PermissionUnitVo VIEW = new PermissionUnitVo("查看", 1);
 
-    public static final PermissionUnitVo CREATE = new PermissionUnitVo("创建", BitUtils.bitValue(1));
+    public static final PermissionUnitVo CREATE = new PermissionUnitVo("创建", 1 << 1);
 
-    public static final PermissionUnitVo EDIT = new PermissionUnitVo("编辑", BitUtils.bitValue(2));
+    public static final PermissionUnitVo EDIT = new PermissionUnitVo("编辑", 1 << 2);
 
-    public static final PermissionUnitVo DELETE = new PermissionUnitVo("删除", BitUtils.bitValue(3));
+    public static final PermissionUnitVo DELETE = new PermissionUnitVo("删除", 1 << 3);
 
     private String label;
 

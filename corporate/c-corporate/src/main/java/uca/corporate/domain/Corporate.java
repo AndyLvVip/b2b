@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import uca.base.domain.StdStrDomain;
+import uca.base.fs.constant.CorporateType;
 import uca.base.fs.constant.RoleTemplate;
 import uca.base.user.StdCorporate;
 
@@ -54,33 +55,11 @@ public class Corporate extends StdStrDomain {
     public static Corporate newInstance(String name) {
         Corporate corporate = new Corporate();
         corporate.setName(name);
-        corporate.setType(Type.UNKNOWN.val);
+        corporate.setType(CorporateType.UNKNOWN.val);
         corporate.setVerified(false);
         corporate.setActive(true);
         corporate.setLastRoleId(RoleTemplate.REGISTER.val);
         return corporate;
-    }
-
-    public enum Type {
-        /**
-         * 未知类型
-         */
-        UNKNOWN(1),
-        /**
-         * 个人类型
-         */
-        PERSON(2),
-        /**
-         * 企业类型
-         */
-        COMPANY(3),
-        ;
-
-        public final int val;
-
-        Type(int value) {
-            this.val = value;
-        }
     }
 
     public StdCorporate toStdCorporate() {

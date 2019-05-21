@@ -11,7 +11,7 @@ import uca.base.user.StdSimpleUser;
  * @author andy.lv
  * @date 2019/5/17 15:26
  */
-@FeignClient(name = "fs-auth-server")
+@FeignClient(name = "fs-auth-server", primary = false)
 public interface AuthServerFeignClient {
 
     @PostMapping("/user/register")

@@ -1,26 +1,29 @@
-package uca.corporate.service;
+package uca.corporate.fs.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import uca.base.user.StdSimpleUser;
+import uca.corporate.fs.CustomizationConfiguration;
 import uca.corporate.fs.feign.AuthServerFeignClient;
 import uca.corporate.fs.feign.PlatformSysFeignClient;
-import uca.corporate.fs.service.UserService;
 
 /**
  * Created by Andy Lv on 2019/5/19
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
+@Import(CustomizationConfiguration.class)
 public class UserServiceTest {
 
-    @Autowired
+    @SpyBean
     PlatformSysFeignClient platformSysFeignClient;
 
-    @Autowired
+    @SpyBean
     AuthServerFeignClient authServerFeignClient;
 
     @Autowired

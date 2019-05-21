@@ -26,12 +26,10 @@ import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResour
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import uca.base.jooq.JooqUtils;
-import uca.base.user.StdSimpleUser;
+import uca.corporate.fs.security.StdPrincipalExtractor;
 import uca.corporate.fs.service.UserService;
 import uca.platform.factory.StdObjectFactory;
 import uca.platform.json.StdObjectMapper;
-
-import static uca.base.constant.Constants.USER;
 
 /**
  * Created by Andy Lv on 2019/5/4
@@ -78,10 +76,7 @@ public class FsCorporateApplication {
 
     @Bean
     PrincipalExtractor principalExtractor(ObjectMapper objectMapper, UserService userService) {
-        return map -> {
-            StdSimpleUser stdSimpleUser = objectMapper.convertValue(map.get(USER), StdSimpleUser.class);
-            return userService.fetchStdUserInfo(stdSimpleUser.getId());
-        };
+        return new StdPrincipalExtractor(objectMapper, userService);
     }
 
     @Bean

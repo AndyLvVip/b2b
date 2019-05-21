@@ -41,6 +41,8 @@ public class User extends StdStrDomain {
     @Column(name = "enabled")
     private Boolean enabled;
 
+    private Corporate corporate;
+
     public static User newInstance(StdSimpleUser simpleUser, String memberOf) {
         User user = new User();
         user.setUsername(simpleUser.getUsername());

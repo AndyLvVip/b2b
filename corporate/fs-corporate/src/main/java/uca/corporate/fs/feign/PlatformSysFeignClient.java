@@ -14,7 +14,7 @@ import java.util.List;
  * @author andy.lv
  * @date 2019/5/17 8:50
  */
-@FeignClient(name = "fs-platform-sys")
+@FeignClient(name = "fs-platform-sys", primary = false)
 public interface PlatformSysFeignClient {
 
     @GetMapping("/permission/user")
