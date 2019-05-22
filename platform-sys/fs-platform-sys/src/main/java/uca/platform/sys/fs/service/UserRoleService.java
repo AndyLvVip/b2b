@@ -3,11 +3,8 @@ package uca.platform.sys.fs.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uca.base.constant.Constants;
-import uca.platform.sys.domain.Permission;
 import uca.platform.sys.domain.UserRole;
 import uca.platform.sys.fs.repository.UserRoleRepository;
-
-import java.util.List;
 
 /**
  * Description:
@@ -30,9 +27,5 @@ public class UserRoleService {
         userRole.setUserId(userId);
         userRole.setRoleId(roleId);
         userRoleRepository.insert(userRole, Constants.SYSTEM);
-    }
-
-    public List<Permission> fetchAllPermissionList(String userId) {
-        return userRoleRepository.fetchAllPermissionList(userId);
     }
 }
