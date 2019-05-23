@@ -1,0 +1,24 @@
+= RESTful Front Staging Corporate Module API Specification
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectnums:
+:sectnumlevels: 2
+
+{project-version}
+
+== User
+
+=== Register a New User
+
+A `POST` request is used to register a new user（注册新用户）
+
+operation::register[snippets='http-request,request-fields,curl-request,http-response']
+
+=== User Detail With Corporate
+
+A `GET` request is used to fetch a user detail with corporate（用户详情与企业信息）
+
+operation::user-detail[snippets='http-request,request-headers,curl-request,http-response,response-fields']
+

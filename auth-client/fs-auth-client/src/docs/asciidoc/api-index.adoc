@@ -8,28 +8,31 @@
 
 {project-version}
 
-== Web User Login Api
+== Login
 
-A `POST` request is used to login a new web user
+=== User Login for Web Api
+
+A `POST` request is used to login a new web user（Web 用户登录）
 
 operation::web-login[snippets='http-request,request-headers,curl-request,http-response,response-fields']
 
-== Mobile User Login Api
+=== User Login for Mobile Api
 
-A `POST` request is used to login a new mobile user
+A `POST` request is used to login a new mobile user（移动端用户登录）
 
 operation::mobile-login[snippets='http-request,request-headers,curl-request,http-response,response-fields']
 
 
-== Web Refresh Token Api
+== Refresh Token
 
-A `POST` request is used to a new web refresh token
+=== Refresh Token for Web Api
+
+A `POST` request is used to a new web refresh token （Web 用户刷新Token）
 
 operation::web-refresh-token[snippets='http-request,request-headers,curl-request,http-response,response-fields']
 
+=== Refresh Token for Mobile Api
 
-== Mobile Refresh Token Api
-
-A `POST` request is used to a new mobile refresh token
+A `POST` request is used to a new mobile refresh token (移动端用户刷新Token)
 
 operation::mobile-refresh-token[snippets='http-request,request-headers,curl-request,http-response,response-fields']

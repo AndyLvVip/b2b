@@ -1,0 +1,67 @@
+version '1.0-SNAPSHOT'
+
+bootJar.enabled = false
+jar.enabled = true
+
+dependencies {
+    jooqRuntime 'mysql:mysql-connector-java'
+}
+
+
+jooq {
+    version = '3.11.9'
+    edition = 'OSS'
+    platSys(sourceSets.main) {
+        jdbc {
+            driver = 'com.mysql.cj.jdbc.Driver'
+            url = 'jdbc:mysql://192.168.63.195:3306/'
+            user = 'uca'
+            password = 'password'
+            properties {
+                property {
+                    key = 'ssl'
+                    value = 'true'
+                }
+            }
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = 'org.jooq.codegen.DefaultGeneratorStrategy'
+                // ...
+            }
+            database {
+                name = 'org.jooq.meta.mysql.MySQLDatabase'
+                inputSchema = 'plat_sys'
+                outputSchemaToDefault = true
+                recordVersionFields = 'version'
+                includes = 'menu|permission|role|user_role'
+                forcedTypes {
+                    forcedType {
+                        name = 'Integer'
+                        types = 'tinyint'
+                    }
+                }
+                // ...
+            }
+            generate {
+                javaTimeTypes = true
+//                relations = true
+//                deprecated = false
+//                records = true
+//                immutablePojos = true
+//                daos = true
+//                fluentSetters = true
+                // ...
+            }
+            target {
+                packageName = 'jooq.generated.platform.sys'
+                directory = 'src/main/java'
+            }
+        }
+    }
+}
+
+
+// removes the task dependency from compileJava to generateSampleJooqSchemaSource
+project.tasks.getByName('compileJava').dependsOn -= 'generatePlatSysJooqSchemaSource'

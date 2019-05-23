@@ -1,0 +1,33 @@
+= RESTful Front Staging Platform System API Specification
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectnums:
+:sectnumlevels: 2
+
+{project-version}
+
+== User Role
+
+=== Link User to Role Api
+
+A `POST` request is used to link user to role（关联用户角色接口）
+
+operation::link-user-role[snippets='http-request,path-parameters,curl-request,http-response']
+
+== Permission
+
+=== Fetch User Own Permissions
+
+A `GET` request is used to fetch user permissions（获取用户所有权限）
+
+operation::fetch-own-permissions[snippets='http-request,curl-request,http-response,response-fields']
+
+== Menu
+
+=== Fetch User Own Menus
+
+A `GET` request is used to fetch user menus（获取用户所有菜单）
+
+operation::fetch-own-menus[snippets='http-request,curl-request,http-response,response-fields']
