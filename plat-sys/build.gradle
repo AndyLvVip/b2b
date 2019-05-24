@@ -8,6 +8,8 @@ subprojects {
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor 'org.projectlombok:lombok'
 
+        implementation "org.apache.commons:commons-collections4:${collections4Version}"
+
         implementation "io.seata:seata-spring:${seataVersion}"
         implementation "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
         implementation 'javax.persistence:javax.persistence-api'

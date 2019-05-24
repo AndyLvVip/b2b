@@ -1,4 +1,4 @@
-= RESTful Front Staging OAuth2 Client API Specification
+= RESTful 前台 (Front Staging) OAuth2 客户端 API Specification
 :doctype: book
 :source-highlighter: highlightjs
 :toc: left
@@ -8,30 +8,30 @@
 
 {project-version}
 
-== Login
+== 登录
 
-=== User Login for Web Api
+=== Web端用户登录
 
 A `POST` request is used to login a new web user（Web 用户登录）
 
 operation::web-login[snippets='http-request,request-headers,curl-request,http-response,response-fields']
 
-=== User Login for Mobile Api
+=== 移动端用户登录
 
 A `POST` request is used to login a new mobile user（移动端用户登录）
 
 operation::mobile-login[snippets='http-request,request-headers,curl-request,http-response,response-fields']
 
 
-== Refresh Token
+== 刷新Token
 
-=== Refresh Token for Web Api
+=== Web端用户刷新Token
 
 A `POST` request is used to a new web refresh token （Web 用户刷新Token）
 
 operation::web-refresh-token[snippets='http-request,request-headers,curl-request,http-response,response-fields']
 
-=== Refresh Token for Mobile Api
+=== 移动端用户刷新Token
 
 A `POST` request is used to a new mobile refresh token (移动端用户刷新Token)
 

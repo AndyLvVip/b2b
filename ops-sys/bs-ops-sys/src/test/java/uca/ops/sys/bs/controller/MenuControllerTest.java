@@ -93,7 +93,7 @@ public class MenuControllerTest {
         sub1.setIcon("person-info-icon");
         sub1.setName("个人信息");
         sub1.setSequence(new BigDecimal("1"));
-        sub1.setUrl("/baseInfo/detail");
+        sub1.setUrl("/personInfo/detail");
 
         doReturn(Arrays.asList(top, sub1)).when(menuRepository).findAll();
         this.mockMvc.perform(get("/menu/own")

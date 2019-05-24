@@ -40,7 +40,7 @@ public class UserController {
     @GetMapping("/user/detail")
     @PreAuthorize("@accessControlMenu.BASE_INFO_MENU.canView(#stdUser.stdPermissionList)")
     public User info(@AuthenticationPrincipal StdUser stdUser) {
-        return userService.fetchUserDetailWithCorporate(stdUser.getStdSimpleUser().getId());
+        return userService.fetchUserDetail(stdUser.getStdSimpleUser().getId());
     }
 
 }

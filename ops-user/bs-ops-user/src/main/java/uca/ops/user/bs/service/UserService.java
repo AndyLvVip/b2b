@@ -49,7 +49,7 @@ public class UserService {
         return stdUser;
     }
 
-    public User fetchUserDetailWithCorporate(String userId) {
+    public User fetchUserDetail(String userId) {
         User user = userRepository.forceFindById(userId);
         return user;
     }

@@ -22,6 +22,7 @@ subprojects {
         springCloudSeataVersion = '0.9.1.BUILD-SNAPSHOT'
         mysqlConnectorVersion = '8.0.15'
         druidSpringBootVersion = '1.1.10'
+        collections4Version = '4.3'
     }
 
     repositories {

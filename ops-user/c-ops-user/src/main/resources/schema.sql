@@ -7,7 +7,6 @@ drop table if exists `user`;
 create table `user` (
   id char(36) not null primary key,
   username varchar(30) not null,
-  member_of char(36) not null,
   name varchar(30),
   phone char(11),
   email varchar(255),
