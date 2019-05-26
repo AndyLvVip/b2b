@@ -1,8 +1,8 @@
 spring:
   application:
-    name: bs-ops-sys
+    name: fs-plat-file
   profiles:
-    active: dev
+    active: default
   cloud:
     alibaba:
       seata:
@@ -21,4 +21,4 @@ spring:
   profiles: dev
   cloud:
     config:
-      uri: http://192.168.63.195:9888
+      uri: http://192.168.63.195:8888

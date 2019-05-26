@@ -1,0 +1,44 @@
+subprojects {
+    dependencies {
+        implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
+        implementation project(':util')
+        implementation project(':base:c-base')
+        implementation project(':base:bs-base')
+        runtimeOnly "mysql:mysql-connector-java:${mysqlConnectorVersion}"
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        implementation 'net.coobird:thumbnailator:0.4.8'
+        implementation "org.apache.commons:commons-collections4:${collections4Version}"
+        implementation "org.redisson:redisson-spring-boot-starter:${redissonVersion}"
+
+        implementation "io.seata:seata-spring:${seataVersion}"
+        implementation "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
+        implementation 'javax.persistence:javax.persistence-api'
+
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+        implementation "com.alibaba:druid-spring-boot-starter:${druidSpringBootVersion}"
+        implementation ('org.springframework.boot:spring-boot-starter-jooq') {
+            exclude group: 'com.zaxxer', module: 'HikariCP'
+        }
+
+        implementation ("org.springframework.cloud:spring-cloud-alibaba-seata:${springCloudSeataVersion}") {
+            exclude group: 'io.seata', module: 'seata-spring'
+        }
+        implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'
+        implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+        implementation 'org.springframework.cloud:spring-cloud-starter-config'
+        implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+        implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+        implementation 'org.springframework.cloud:spring-cloud-starter-netflix-ribbon'
+        implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+        implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+        runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+
+        asciidoctor "org.springframework.restdocs:spring-restdocs-asciidoctor:${restDocsVersion}"
+
+        testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:${restDocsVersion}"
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    }
+}

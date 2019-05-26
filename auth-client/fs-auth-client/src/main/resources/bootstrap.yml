@@ -2,7 +2,7 @@ spring:
   application:
     name: fs-auth-client
   profiles:
-    active: dev
+    active: default
 ---
 spring:
   profiles: dev

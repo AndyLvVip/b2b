@@ -1,0 +1,18 @@
+version '1.0-SNAPSHOT'
+
+dependencies {
+    implementation project(':plat-file:c-plat-file')
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}

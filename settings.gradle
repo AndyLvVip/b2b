@@ -26,4 +26,7 @@ include 'ops-user:bs-ops-user'
 include 'ops-sys'
 include 'ops-sys:c-ops-sys'
 include 'ops-sys:bs-ops-sys'
-
+include 'plat-file'
+include 'plat-file:c-plat-file'
+include 'plat-file:bs-plat-file'
+include 'plat-file:fs-plat-file'

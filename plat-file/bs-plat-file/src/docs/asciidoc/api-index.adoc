@@ -1,0 +1,53 @@
+= RESTful 后台(Back Staging) 运维（附件）模块 API Specification
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+:sectnums:
+:sectnumlevels: 2
+
+{project-version}
+
+== 文件
+
+=== 文件上传
+
+A `POST` request is used to upload a file
+
+operation::file-upload[snippets='http-request,request-parts,request-headers,curl-request,http-response,response-fields']
+
+== 文件与文件项
+
+=== 文件上传并且创建文件项
+
+operation::file-item-upload[snippets='http-request,request-parts,request-headers,request-parameters,curl-request,http-response,response-fields']
+
+=== 获取文件项接口
+
+operation::fetch-items[snippets='http-request,request-headers,request-parameters,curl-request,http-response,response-fields']
+
+=== 获取每个文件集里面的第一个文件项
+
+operation::fetch-first-file-in-each-group[snippets='http-request,request-headers,request-parameters,curl-request,http-response,response-fields']
+
+=== 删除文件项
+
+operation::file-delete[snippets='http-request,request-headers,path-parameters,curl-request,http-response']
+
+=== 图片（加水印）上传并且创建文件项
+
+operation::file-item-img-upload[snippets='http-request,request-parts,request-headers,request-parameters,curl-request,http-response,response-fields']
+
+== 二维码
+
+=== 上传二维码初始化
+
+operation::init-qr-code[snippets='http-request,request-headers,curl-request,http-response,response-fields']
+
+=== 通过二维码上传文件并且创建文件项
+
+operation::upload-by-qr-code[snippets='http-request,request-parts,request-headers,path-parameters,curl-request,http-response,response-fields']
+
+=== 通过二维码上传图片（加水印）并且创建文件项
+
+operation::upload-img-by-qr-code[snippets='http-request,request-parts,request-headers,path-parameters,curl-request,http-response,response-fields']

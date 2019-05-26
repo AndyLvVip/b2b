@@ -34,9 +34,9 @@ public abstract class StdRepository<R extends UpdatableRecord<R>, P extends StdD
         super.insert(object);
     }
 
-    @Override
-    public void update(P object) {
+    public void update(P object, String updatedBy) {
         object.setUpdatedOn(LocalDateTime.now());
+        object.setUpdatedBy(updatedBy);
         super.update(object);
     }
 

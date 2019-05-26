@@ -9,6 +9,7 @@ subprojects {
         implementation 'org.springframework.data:spring-data-commons'
         implementation 'org.apache.commons:commons-lang3'
         implementation 'com.fasterxml.jackson.core:jackson-annotations'
+        implementation "org.redisson:redisson-spring-boot-starter:${redissonVersion}"
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
     
