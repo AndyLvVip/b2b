@@ -2,7 +2,7 @@ spring:
   application:
     name: bs-plat-file
   profiles:
-    active: default
+    active: dev
   cloud:
     alibaba:
       seata:

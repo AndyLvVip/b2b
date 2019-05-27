@@ -2,7 +2,7 @@ spring:
   application:
     name: fs-plat-file
   profiles:
-    active: default
+    active: dev
   cloud:
     alibaba:
       seata:

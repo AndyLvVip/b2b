@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoT
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
@@ -63,7 +64,7 @@ public class UserControllerTest {
     @Autowired
     StdObjectMapper stdObjectMapper;
 
-    @SpyBean
+    @MockBean
     UserService userService;
 
     @SpyBean

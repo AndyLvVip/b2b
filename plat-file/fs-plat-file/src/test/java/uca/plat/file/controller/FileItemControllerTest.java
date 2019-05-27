@@ -90,25 +90,25 @@ public class FileItemControllerTest {
                                 headerWithName("Authorization").description("Oauth2 access token")
                         )
                         , requestParts(
-                                partWithName("file").description("The file to upload")
+                                partWithName("file").description("上传的文件")
                         )
                         , requestParameters(
-                                parameterWithName("fileSrcRemark").description("File source remark")
-                                , parameterWithName("fileSetInfoId").description("Id of the file set info")
+                                parameterWithName("fileSrcRemark").description("文件来源备注")
+                                , parameterWithName("fileSetInfoId").description("文件集id")
                         )
                         , responseFields(
-                                fieldWithPath("id").description("File item info id")
-                                , fieldWithPath("size").description("The size of the file")
-                                , fieldWithPath("filePath").description("The path of the file")
-                                , fieldWithPath("fileName").description("The name of the file")
-                                , fieldWithPath("sequence").description("The sequence of the order")
-                                , fieldWithPath("fileSetInfoId").description("Id of the file set info")
+                                fieldWithPath("id").description("文件项 id")
+                                , fieldWithPath("size").description("文件大小")
+                                , fieldWithPath("filePath").description("文件路径")
+                                , fieldWithPath("fileName").description("文件名")
+                                , fieldWithPath("sequence").description("文件顺序")
+                                , fieldWithPath("fileSetInfoId").description("文件集id")
                                 , fieldWithPath("version").description("")
                         )
                 ))
-        .andReturn().getResponse().getContentAsString()
+                .andReturn().getResponse().getContentAsString()
 
-        ;
+                ;
         FileItemInfo fileItemInfo = stdObjectMapper.fromJson(jsonResult, FileItemInfo.class);
 
         assertNotNull(fileItemInfo);
@@ -150,10 +150,10 @@ public class FileItemControllerTest {
                                 headerWithName("Authorization").description("Oauth2 access token")
                         )
                         , pathParameters(
-                                parameterWithName("id").description("File Item Info Id")
+                                parameterWithName("id").description("文件项id")
                         )
                         , requestFields(
-                                fieldWithPath("version").description("Version of current record")
+                                fieldWithPath("version").description("文件项版本")
                         )
                         )
                 )
@@ -182,19 +182,19 @@ public class FileItemControllerTest {
                                 headerWithName("Authorization").description("Oauth2 access token")
                         )
                         , requestParts(
-                                partWithName("file").description("The file to upload")
+                                partWithName("file").description("上传的文件")
                         )
                         , requestParameters(
-                                parameterWithName("fileSrcRemark").description("File source remark")
-                                , parameterWithName("fileSetInfoId").description("Id of the file set info")
+                                parameterWithName("fileSrcRemark").description("文件来源备注")
+                                , parameterWithName("fileSetInfoId").description("文件集id")
                         )
                         , responseFields(
-                                fieldWithPath("id").description("File item info id")
-                                , fieldWithPath("size").description("The size of the file")
-                                , fieldWithPath("filePath").description("The path of the file")
-                                , fieldWithPath("fileName").description("The name of the file")
-                                , fieldWithPath("sequence").description("The sequence of the order")
-                                , fieldWithPath("fileSetInfoId").description("Id of the file set info")
+                                fieldWithPath("id").description("文件项id")
+                                , fieldWithPath("size").description("文件大小")
+                                , fieldWithPath("filePath").description("文件路径")
+                                , fieldWithPath("fileName").description("文件名")
+                                , fieldWithPath("sequence").description("文件顺序")
+                                , fieldWithPath("fileSetInfoId").description("文件集id")
                                 , fieldWithPath("version").description("")
                         )
                 ))

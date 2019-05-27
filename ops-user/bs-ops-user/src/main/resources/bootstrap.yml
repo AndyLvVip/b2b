@@ -2,7 +2,7 @@ spring:
   application:
     name: bs-ops-user
   profiles:
-    active: default
+    active: dev
   cloud:
     alibaba:
       seata:

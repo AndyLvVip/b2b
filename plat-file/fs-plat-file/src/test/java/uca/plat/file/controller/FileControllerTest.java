@@ -82,10 +82,10 @@ public class FileControllerTest {
                                 headerWithName("Authorization").description("Oauth2 access token")
                         )
                         , requestParts(
-                                partWithName("file").description("The file to upload")
+                                partWithName("file").description("上传的文件")
                         )
                         , responseFields(
-                                fieldWithPath("filePath").description("The path of the file")
+                                fieldWithPath("filePath").description("文件的路径")
                         )
                 )).andReturn();
         String jsonFileItemInfo = result.getResponse().getContentAsString();
