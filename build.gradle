@@ -30,7 +30,6 @@ subprojects {
         maven { url 'http://192.168.63.195:8081/artifactory/maven-center/' }
         maven { url 'http://192.168.63.195:8081/artifactory/spring-io-milestone/' }
         maven { url 'http://192.168.63.195:8081/artifactory/uca-resp/' }
-        maven { url 'http://192.168.63.195:8081/artifactory/gradle-plugins/' }
         maven { url 'http://192.168.63.195:8081/artifactory/spring-snapshot/' }
     }
 
