@@ -6,7 +6,7 @@
 :sectnums:
 :sectnumlevels: 2
 
-{project-version}
+{project-name} : {project-version}
 
 == 登录
 
