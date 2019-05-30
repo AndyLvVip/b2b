@@ -9,6 +9,10 @@ spring:
         tx-service-group: b2b_bs_tx_group
     config:
       uri: http://127.0.0.1:9888
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      default-transaction-isolation: 2
 management:
   endpoints:
     web:
