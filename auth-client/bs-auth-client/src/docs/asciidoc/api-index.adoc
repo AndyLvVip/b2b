@@ -10,11 +10,18 @@
 
 == 登录
 
+=== Web端用户获取验证码
+
+A `POST` request is used to get security code
+
+operation::gen-security-code[snippets='http-request,curl-request,http-response,response-fields']
+
+
 === Web端用户登录
 
 A `POST` request is used to login a new web user（Web 用户登录）
 
-operation::web-login[snippets='http-request,request-headers,curl-request,http-response,response-fields']
+operation::web-login[snippets='http-request,request-headers,request-fields,curl-request,http-response,response-fields']
 
 === 移动端用户登录
 

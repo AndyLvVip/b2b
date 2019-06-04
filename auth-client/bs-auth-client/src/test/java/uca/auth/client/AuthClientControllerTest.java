@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.HttpEntity;
@@ -20,6 +21,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.client.RestTemplate;
+import uca.auth.client.bs.service.SecurityCodeService;
+import uca.auth.client.bs.vo.SecurityCodeReqVo;
 import uca.auth.client.config.Config;
 import uca.auth.client.vo.OAuth2TokenVo;
 import uca.platform.StdStringUtils;
@@ -31,11 +34,11 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static uca.auth.client.CustomizationConfiguration.restDocument;
 
 /**
  * Created by andy.lv
@@ -62,6 +65,9 @@ public class AuthClientControllerTest {
     @MockBean
     Config.Client authClient;
 
+    @SpyBean
+    SecurityCodeService securityCodeService;
+
     @Before
     public void setUp() {
         OAuth2TokenVo token = new OAuth2TokenVo();
@@ -78,11 +84,6 @@ public class AuthClientControllerTest {
         )
         ).thenReturn(response);
 
-        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
-        when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
-        when(valueOperations.get(anyString())).thenReturn(StdStringUtils.uuid());
-        doNothing().when(valueOperations).set(anyString(), anyString());
-
         when(authClient.getId()).thenReturn("id");
         when(authClient.getSecret()).thenReturn("secret");
         Config.Client.Scope web = new Config.Client.Scope();
@@ -90,18 +91,46 @@ public class AuthClientControllerTest {
         when(authClient.getWeb()).thenReturn(web);
     }
 
-    private ResultActions _webLogin() throws Exception {
+    private ResultActions _webLogin(SecurityCodeReqVo vo) throws Exception {
         return this.mockMvc.perform(post("/web/login")
                 .with(httpBasic("dummy", "password"))
                 .accept(MediaType.APPLICATION_JSON_UTF8)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(stdObjectMapper.toJson(vo))
         ).andExpect(status().isOk());
     }
 
     @Test
+    public void genSecurityCode() throws Exception {
+        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
+        when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
+        doNothing().when(valueOperations).set(anyString(), anyString());
+        this.mockMvc.perform(post("/securityCode/gen"))
+                .andExpect(status().isOk())
+                .andDo(restDocument(
+                        responseFields(
+                                fieldWithPath("key").description("验证码key")
+                                , fieldWithPath("image").description("验证码图片，以Base64文本返回")
+                        )
+                ));
+    }
+
+    @Test
     public void webLogin() throws Exception {
-        _webLogin()
-                .andDo(CustomizationConfiguration.restDocument(requestHeaders(
+        SecurityCodeReqVo reqVo = new SecurityCodeReqVo();
+        reqVo.setKey(StdStringUtils.uuid());
+        reqVo.setValue("12ab");
+        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
+        when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
+        doNothing().when(valueOperations).set(anyString(), anyString());
+        doNothing().when(securityCodeService).validateSecurityCode(any(SecurityCodeReqVo.class));
+        _webLogin(reqVo)
+                .andDo(restDocument(requestHeaders(
                         headerWithName("Authorization").description("Basic身份认证")
+                        )
+                        , requestFields(
+                                fieldWithPath("key").description("验证码的key")
+                                , fieldWithPath("value").description("验证码")
                         )
                         , responseFields(
                                 fieldWithPath("access_token").description("访问使用token")
@@ -122,8 +151,11 @@ public class AuthClientControllerTest {
 
     @Test
     public void mobileLogin() throws Exception {
+        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
+        when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
+        doNothing().when(valueOperations).set(anyString(), anyString());
         _mobileLogin()
-                .andDo(CustomizationConfiguration.restDocument(requestHeaders(
+                .andDo(restDocument(requestHeaders(
                         headerWithName("Authorization").description("Basic身份认证")
                         )
                         , responseFields(
@@ -138,14 +170,23 @@ public class AuthClientControllerTest {
 
     @Test
     public void webRefreshToken() throws Exception {
-        String result = _webLogin()
+        SecurityCodeReqVo reqVo = new SecurityCodeReqVo();
+        reqVo.setKey(StdStringUtils.uuid());
+        reqVo.setValue("12ab");
+        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
+        when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
+        when(valueOperations.get(anyString())).thenReturn(StdStringUtils.uuid());
+        doNothing().when(valueOperations).set(anyString(), anyString());
+        doNothing().when(securityCodeService).validateSecurityCode(any(SecurityCodeReqVo.class));
+
+        String result = _webLogin(reqVo)
                 .andReturn().getResponse().getContentAsString();
         OAuth2TokenVo token = stdObjectMapper.fromJson(result, OAuth2TokenVo.class);
         this.mockMvc.perform(post("/web/refreshToken")
                 .header("Authorization", token.getAccess_token())
         )
         .andExpect(status().isOk())
-                .andDo(CustomizationConfiguration.restDocument(requestHeaders(
+                .andDo(restDocument(requestHeaders(
                         headerWithName("Authorization").description("Access Token")
                         )
                         , responseFields(
@@ -161,6 +202,10 @@ public class AuthClientControllerTest {
 
     @Test
     public void mobileRefreshToken() throws Exception {
+        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
+        when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
+        when(valueOperations.get(anyString())).thenReturn(StdStringUtils.uuid());
+        doNothing().when(valueOperations).set(anyString(), anyString());
         String result = _mobileLogin()
                 .andReturn().getResponse().getContentAsString();
         OAuth2TokenVo token = stdObjectMapper.fromJson(result, OAuth2TokenVo.class);
@@ -168,7 +213,7 @@ public class AuthClientControllerTest {
                 .header("Authorization", token.getAccess_token())
         )
                 .andExpect(status().isOk())
-                .andDo(CustomizationConfiguration.restDocument(requestHeaders(
+                .andDo(restDocument(requestHeaders(
                         headerWithName("Authorization").description("Access Token")
                         )
                         , responseFields(

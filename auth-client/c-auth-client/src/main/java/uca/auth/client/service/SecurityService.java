@@ -1,4 +1,4 @@
-package uca.auth.client;
+package uca.auth.client.service;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
