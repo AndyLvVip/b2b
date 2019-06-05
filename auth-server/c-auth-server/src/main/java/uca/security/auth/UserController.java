@@ -31,8 +31,9 @@ public class UserController {
     @GetMapping("/user")
     public Map<String, Object> user(OAuth2Authentication user) {
         Map<String, Object> result = new HashMap<>();
-        if(user.getUserAuthentication().getPrincipal() instanceof User)
+        if(user.getUserAuthentication().getPrincipal() instanceof User) {
             ((User) user.getUserAuthentication().getPrincipal()).setPassword(null);//clear the password before returning
+        }
         result.put(USER, user.getUserAuthentication().getPrincipal());
         return result;
     }
@@ -51,8 +52,8 @@ public class UserController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void logout(@RequestHeader("Authorization") String bearer) {
         if(StringUtils.isNotEmpty(bearer)) {
-            String access_token = bearer.replace("Bearer ", "");
-            consumerTokenServices.revokeToken(access_token);
+            String accessToken = bearer.replace("Bearer ", "");
+            consumerTokenServices.revokeToken(accessToken);
         }
     }
 

@@ -13,9 +13,9 @@ import java.time.LocalDateTime;
  * Created by andy.lv
  * on: 2019/1/24 17:23
  */
-public abstract class StdRepository<R extends UpdatableRecord<R>, P extends StdDomain, T> extends DAOImpl<R, P, T> {
+public abstract class AbstractStdRepository<R extends UpdatableRecord<R>, P extends StdDomain, T> extends DAOImpl<R, P, T> {
 
-    protected StdRepository(Table<R> table, Class<P> type, Configuration configuration) {
+    protected AbstractStdRepository(Table<R> table, Class<P> type, Configuration configuration) {
         super(table, type, configuration);
     }
 
@@ -42,8 +42,9 @@ public abstract class StdRepository<R extends UpdatableRecord<R>, P extends StdD
 
     public P forceFindById(T id) {
         P result = findById(id);
-        if(null == result)
+        if(null == result) {
             throw new StdFileNotFoundException("can not find document by id: " + id);
+        }
         return result;
     }
 }

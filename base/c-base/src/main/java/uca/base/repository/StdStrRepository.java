@@ -6,7 +6,7 @@ import org.jooq.UpdatableRecord;
 import uca.base.domain.StdStrDomain;
 import uca.platform.StdStringUtils;
 
-public class StdStrRepository<R extends UpdatableRecord<R>, P extends StdStrDomain> extends StdRepository<R, P, String> {
+public class StdStrRepository<R extends UpdatableRecord<R>, P extends StdStrDomain> extends AbstractStdRepository<R, P, String> {
 
 
     protected StdStrRepository(Table<R> table, Class<P> type, Configuration configuration) {
@@ -20,8 +20,9 @@ public class StdStrRepository<R extends UpdatableRecord<R>, P extends StdStrDoma
 
     @Override
     protected void create(P object, String createdBy) {
-        if(null == object.getId() || object.getId().isEmpty())
+        if(null == object.getId() || object.getId().isEmpty()) {
             object.setId(StdStringUtils.uuid());
+        }
         super.create(object, createdBy);
     }
 }

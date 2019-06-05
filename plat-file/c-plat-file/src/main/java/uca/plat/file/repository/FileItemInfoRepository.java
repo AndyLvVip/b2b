@@ -38,8 +38,9 @@ public class FileItemInfoRepository extends StdStrRepository<FileItemInfoRecord,
     }
 
     public List<FileItemInfo> fetchByFileSetIds(List<String> fileSetInfoIds) {
-        if(CollectionUtils.isEmpty(fileSetInfoIds))
+        if(CollectionUtils.isEmpty(fileSetInfoIds)) {
             return Collections.emptyList();
+        }
 
         return dsl.selectFrom(FILE_ITEM_INFO)
                 .where(FILE_ITEM_INFO.FILE_SET_INFO_ID.in(fileSetInfoIds))
@@ -47,8 +48,9 @@ public class FileItemInfoRepository extends StdStrRepository<FileItemInfoRecord,
     }
 
     public List<FileItemInfo> fetchFirstFileInEachGroup(List<String> fileSetInfoIds) {
-        if(CollectionUtils.isEmpty(fileSetInfoIds))
+        if(CollectionUtils.isEmpty(fileSetInfoIds)) {
             return Collections.emptyList();
+        }
         DSLContext newDsl = DSL.using(dsl.configuration()
                 .derive(JooqUtils.initUserVar4FetchTopNInEachGroup())
         );
@@ -56,7 +58,7 @@ public class FileItemInfoRepository extends StdStrRepository<FileItemInfoRecord,
         Field<String> varPrev = field("@prev", String.class);
         Field<String> prev = field("prev", String.class);
         Field<Integer> num = field("num", Integer.class);
-        Table innerTable = newDsl.select(FILE_ITEM_INFO.fields())
+        Table<?> innerTable = newDsl.select(FILE_ITEM_INFO.fields())
                 .select(iif(varPrev.eq(FILE_ITEM_INFO.FILE_SET_INFO_ID),
                         field("@num := @num + 1", Integer.class),
                         field("@num := 1", Integer.class)).as(num))
@@ -70,8 +72,9 @@ public class FileItemInfoRepository extends StdStrRepository<FileItemInfoRecord,
                 .where(innerTable.field(num).le(1))
                 .fetchMany()
                 ;
-        if(null == results || results.isEmpty())
-            return Collections.EMPTY_LIST;
+        if(null == results || results.isEmpty()) {
+            return Collections.emptyList();
+        }
 
         return results.get(0)
                 .into(FileItemInfo.class)

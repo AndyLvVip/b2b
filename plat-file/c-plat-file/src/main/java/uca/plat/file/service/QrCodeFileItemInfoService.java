@@ -53,8 +53,9 @@ public class QrCodeFileItemInfoService {
     private QrCodeUploadVo fetchQrCodeUploadVo(String qrCode) {
         String jsonFileItemInfo = stringRedisTemplate.opsForValue().get(qrCode);
         QrCodeUploadVo qrCodeUploadVo = stdObjectMapper.fromJson(jsonFileItemInfo, QrCodeUploadVo.class);
-        if(null == qrCodeUploadVo)
+        if(null == qrCodeUploadVo) {
             throw new IllegalArgumentException("二维码已经失效，请重新扫码");
+        }
         return qrCodeUploadVo;
     }
 

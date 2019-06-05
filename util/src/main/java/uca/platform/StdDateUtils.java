@@ -9,39 +9,39 @@ import java.time.format.DateTimeFormatter;
  * On @date 19-1-25 下午10:49
  */
 public class StdDateUtils {
-    private static final DateTimeFormatter yyyyMMdd = DateTimeFormatter.ofPattern("yyyyMMdd");
+    private static final DateTimeFormatter STD_YYYYMMDD = DateTimeFormatter.ofPattern("yyyyMMdd");
 
     public static String now2yyyyMMdd() {
-        return LocalDateTime.now().format(yyyyMMdd);
+        return LocalDateTime.now().format(STD_YYYYMMDD);
     }
 
-    private static final DateTimeFormatter yyMMddHHmmssSSS = DateTimeFormatter.ofPattern("yyMMddHHmmssSSS");
+    private static final DateTimeFormatter STD_YYMMDDHHMMSS_SSS = DateTimeFormatter.ofPattern("yyMMddHHmmssSSS");
 
     public static String now2yyMMddHHmmssSSS() {
-        return LocalDateTime.now().format(yyMMddHHmmssSSS);
+        return LocalDateTime.now().format(STD_YYMMDDHHMMSS_SSS);
     }
 
-    public static final DateTimeFormatter yyyy_MM_dd_HH_mm_ss = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    public static final DateTimeFormatter STD_YYYY_MM_DD_HH_MM_SS = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    public static String format2yyyy_MM_dd_HH_mm_ss(LocalDateTime dateTime) {
-        return dateTime.format(yyyy_MM_dd_HH_mm_ss);
+    public static String format2StdyyyyMMddHHmmssWithSeparator(LocalDateTime dateTime) {
+        return dateTime.format(STD_YYYY_MM_DD_HH_MM_SS);
     }
 
-    public static String now2yyyy_MM_dd_HH_mm_ss() {
-        return format2yyyy_MM_dd_HH_mm_ss(LocalDateTime.now());
+    public static String now2StdyyyyMMddHHmmss() {
+        return format2StdyyyyMMddHHmmssWithSeparator(LocalDateTime.now());
     }
 
-    public static final DateTimeFormatter yyyy_MM_dd = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    public static final DateTimeFormatter STD_YYYY_MM_DD = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public static String format2yyyy_MM_dd(LocalDate date) {
-        return date.format(yyyy_MM_dd);
+    public static String format2StdyyyyMMddWithSeparator(LocalDate date) {
+        return date.format(STD_YYYY_MM_DD);
     }
 
-    public static LocalDate parse2yyyy_MM_dd(String date) {
-        return LocalDate.parse(date, yyyy_MM_dd);
+    public static LocalDate parse2StdyyyyMMddWithSeparator(String date) {
+        return LocalDate.parse(date, STD_YYYY_MM_DD);
     }
 
-    public static String now2yyyy_MM_dd() {
-        return format2yyyy_MM_dd(LocalDate.now());
+    public static String now2StdyyyyMMddWithSeparator() {
+        return format2StdyyyyMMddWithSeparator(LocalDate.now());
     }
 }

@@ -65,10 +65,10 @@ public class AuthClientControllerTest {
     @Before
     public void setUp() {
         OAuth2TokenVo token = new OAuth2TokenVo();
-        token.setAccess_token(StdStringUtils.uuid());
-        token.setExpires_in(30 * 60);
+        token.setAccessToken(StdStringUtils.uuid());
+        token.setExpiresIn(30 * 60);
         token.setScope("webclient");
-        token.setToken_type("bearer");
+        token.setTokenType("bearer");
         ResponseEntity<OAuth2TokenVo> response = ResponseEntity.ok(token);
         when(restTemplate.exchange(
                 anyString()
@@ -90,7 +90,7 @@ public class AuthClientControllerTest {
         when(authClient.getWeb()).thenReturn(web);
     }
 
-    private ResultActions _webLogin() throws Exception {
+    private ResultActions loginFromWeb() throws Exception {
         return this.mockMvc.perform(post("/web/login")
                 .with(httpBasic("dummy", "password"))
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -99,7 +99,7 @@ public class AuthClientControllerTest {
 
     @Test
     public void webLogin() throws Exception {
-        _webLogin()
+        loginFromWeb()
                 .andDo(CustomizationConfiguration.restDocument(requestHeaders(
                         headerWithName("Authorization").description("Basic身份认证")
                         )
@@ -112,7 +112,7 @@ public class AuthClientControllerTest {
                 ));
     }
 
-    private ResultActions _mobileLogin() throws Exception {
+    private ResultActions loginFromMobile() throws Exception {
         return this.mockMvc.perform(post("/mobile/login")
                 .with(httpBasic("dummy", "password"))
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -122,7 +122,7 @@ public class AuthClientControllerTest {
 
     @Test
     public void mobileLogin() throws Exception {
-        _mobileLogin()
+        loginFromMobile()
                 .andDo(CustomizationConfiguration.restDocument(requestHeaders(
                         headerWithName("Authorization").description("Basic身份认证")
                         )
@@ -138,11 +138,11 @@ public class AuthClientControllerTest {
 
     @Test
     public void webRefreshToken() throws Exception {
-        String result = _webLogin()
+        String result = loginFromWeb()
                 .andReturn().getResponse().getContentAsString();
         OAuth2TokenVo token = stdObjectMapper.fromJson(result, OAuth2TokenVo.class);
         this.mockMvc.perform(post("/web/refreshToken")
-                .header("Authorization", token.getAccess_token())
+                .header("Authorization", token.getAccessToken())
         )
         .andExpect(status().isOk())
                 .andDo(CustomizationConfiguration.restDocument(requestHeaders(
@@ -161,11 +161,11 @@ public class AuthClientControllerTest {
 
     @Test
     public void mobileRefreshToken() throws Exception {
-        String result = _mobileLogin()
+        String result = loginFromMobile()
                 .andReturn().getResponse().getContentAsString();
         OAuth2TokenVo token = stdObjectMapper.fromJson(result, OAuth2TokenVo.class);
         this.mockMvc.perform(post("/mobile/refreshToken")
-                .header("Authorization", token.getAccess_token())
+                .header("Authorization", token.getAccessToken())
         )
                 .andExpect(status().isOk())
                 .andDo(CustomizationConfiguration.restDocument(requestHeaders(

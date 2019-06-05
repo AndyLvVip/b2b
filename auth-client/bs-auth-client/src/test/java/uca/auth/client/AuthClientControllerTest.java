@@ -71,10 +71,10 @@ public class AuthClientControllerTest {
     @Before
     public void setUp() {
         OAuth2TokenVo token = new OAuth2TokenVo();
-        token.setAccess_token(StdStringUtils.uuid());
-        token.setExpires_in(30 * 60);
+        token.setAccessToken(StdStringUtils.uuid());
+        token.setExpiresIn(30 * 60);
         token.setScope("webclient");
-        token.setToken_type("bearer");
+        token.setTokenType("bearer");
         ResponseEntity<OAuth2TokenVo> response = ResponseEntity.ok(token);
         when(restTemplate.exchange(
                 anyString()
@@ -91,7 +91,7 @@ public class AuthClientControllerTest {
         when(authClient.getWeb()).thenReturn(web);
     }
 
-    private ResultActions _webLogin(SecurityCodeReqVo vo) throws Exception {
+    private ResultActions webLogin(SecurityCodeReqVo vo) throws Exception {
         return this.mockMvc.perform(post("/web/login")
                 .with(httpBasic("dummy", "password"))
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -124,7 +124,7 @@ public class AuthClientControllerTest {
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         doNothing().when(valueOperations).set(anyString(), anyString());
         doNothing().when(securityCodeService).validateSecurityCode(any(SecurityCodeReqVo.class));
-        _webLogin(reqVo)
+        webLogin(reqVo)
                 .andDo(restDocument(requestHeaders(
                         headerWithName("Authorization").description("Basic身份认证")
                         )
@@ -141,7 +141,7 @@ public class AuthClientControllerTest {
                 ));
     }
 
-    private ResultActions _mobileLogin() throws Exception {
+    private ResultActions loginFromMobile() throws Exception {
         return this.mockMvc.perform(post("/mobile/login")
                 .with(httpBasic("dummy", "password"))
                 .accept(MediaType.APPLICATION_JSON_UTF8)
@@ -154,7 +154,7 @@ public class AuthClientControllerTest {
         ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         doNothing().when(valueOperations).set(anyString(), anyString());
-        _mobileLogin()
+        loginFromMobile()
                 .andDo(restDocument(requestHeaders(
                         headerWithName("Authorization").description("Basic身份认证")
                         )
@@ -179,11 +179,11 @@ public class AuthClientControllerTest {
         doNothing().when(valueOperations).set(anyString(), anyString());
         doNothing().when(securityCodeService).validateSecurityCode(any(SecurityCodeReqVo.class));
 
-        String result = _webLogin(reqVo)
+        String result = webLogin(reqVo)
                 .andReturn().getResponse().getContentAsString();
         OAuth2TokenVo token = stdObjectMapper.fromJson(result, OAuth2TokenVo.class);
         this.mockMvc.perform(post("/web/refreshToken")
-                .header("Authorization", token.getAccess_token())
+                .header("Authorization", token.getAccessToken())
         )
         .andExpect(status().isOk())
                 .andDo(restDocument(requestHeaders(
@@ -206,11 +206,11 @@ public class AuthClientControllerTest {
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get(anyString())).thenReturn(StdStringUtils.uuid());
         doNothing().when(valueOperations).set(anyString(), anyString());
-        String result = _mobileLogin()
+        String result = loginFromMobile()
                 .andReturn().getResponse().getContentAsString();
         OAuth2TokenVo token = stdObjectMapper.fromJson(result, OAuth2TokenVo.class);
         this.mockMvc.perform(post("/mobile/refreshToken")
-                .header("Authorization", token.getAccess_token())
+                .header("Authorization", token.getAccessToken())
         )
                 .andExpect(status().isOk())
                 .andDo(restDocument(requestHeaders(

@@ -28,8 +28,9 @@ public class FileUploadService {
         Path filePath = Paths.get(platFileConfiguration.getRealFilePath(), relativeFilePath);
         try {
             File dest = new File(filePath.toString());
-            if(!dest.getParentFile().exists())
+            if(!dest.getParentFile().exists()) {
                 Assert.isTrue(dest.getParentFile().mkdirs(), "can not mkdirs for: " + dest.getParentFile().getAbsolutePath());
+            }
             Assert.isTrue(dest.createNewFile(), "can not mkdirs for: " + dest.getAbsolutePath());
             file.transferTo(dest);
             return relativeFilePath;

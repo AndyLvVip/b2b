@@ -13,7 +13,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import static uca.platform.StdDateUtils.yyyy_MM_dd_HH_mm_ss;
+import static uca.platform.StdDateUtils.STD_YYYY_MM_DD_HH_MM_SS;
 
 /**
  * Created by andy.lv
@@ -30,8 +30,8 @@ public class StdObjectFactory {
         mapper.configOverride(BigDecimal.class).setFormat(JsonFormat.Value.forShape(JsonFormat.Shape.STRING));
         mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
         JavaTimeModule javaTimeModule = new JavaTimeModule();
-        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(yyyy_MM_dd_HH_mm_ss));
-        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(yyyy_MM_dd_HH_mm_ss));
+        javaTimeModule.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(STD_YYYY_MM_DD_HH_MM_SS));
+        javaTimeModule.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(STD_YYYY_MM_DD_HH_MM_SS));
         mapper.registerModule(javaTimeModule);
         return mapper;
     }

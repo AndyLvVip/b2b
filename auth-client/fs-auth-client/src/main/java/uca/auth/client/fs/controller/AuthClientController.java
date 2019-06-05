@@ -60,8 +60,8 @@ public class AuthClientController {
         if(StringUtils.isEmpty(authorization)) {
             throw new InvalidAccessTokenException("empty authorization");
         }
-        String access_token = authorization.replace("Bearer ", "");
-        return this.securityService.refreshToken(scope, access_token);
+        String accessToken = authorization.replace("Bearer ", "");
+        return this.securityService.refreshToken(scope, accessToken);
     }
 
 }

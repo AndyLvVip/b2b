@@ -16,9 +16,9 @@ public class JooqPageUtils {
 
     public static <T> PageImpl<T> page(Class<T> returnType, Query query, Counter count, Pageable pageable) {
         int total = count.handle().fetchOne(0, int.class);
-        if(total == 0)
+        if (total == 0) {
             return new PageImpl<>(Collections.emptyList(), pageable, total);
-        else
+        } else {
             return new PageImpl<>(query.handle()
                     .limit(pageable.getPageSize())
                     .offset((int) pageable.getOffset())
@@ -27,6 +27,7 @@ public class JooqPageUtils {
                     , total
             )
                     ;
+        }
     }
 
     public interface Query {

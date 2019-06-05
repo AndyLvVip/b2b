@@ -44,8 +44,9 @@ public class FileItemController {
             , MultipartFile file
             , String fileSrcRemark
     ) {
-        if(StringUtils.isEmpty(fileSetInfoId))
+        if(StringUtils.isEmpty(fileSetInfoId)) {
             fileSetInfoId = StdStringUtils.uuid();
+        }
         return this.fileItemInfoService.upload(StoreLocationFlag.FILE, fileSetInfoId, file, fileSrcRemark, user.getUsername());
     }
 
@@ -71,8 +72,9 @@ public class FileItemController {
             , MultipartFile file
             , String fileSrcRemark
     ) {
-        if(StringUtils.isEmpty(fileSetInfoId))
+        if(StringUtils.isEmpty(fileSetInfoId)) {
             fileSetInfoId = StdStringUtils.uuid();
+        }
         return this.imageFileItemInfoService.upload(fileSetInfoId, file, fileSrcRemark, user.getUsername());
     }
 }

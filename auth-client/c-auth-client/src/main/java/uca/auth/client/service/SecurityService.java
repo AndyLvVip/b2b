@@ -42,22 +42,21 @@ public class SecurityService {
         return authenticated(scope, map, null);
     }
 
-    public OAuth2TokenVo refreshToken(Config.Client.Scope scope, String access_token) {
+    public OAuth2TokenVo refreshToken(Config.Client.Scope scope, String accessToken) {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-        String refresh_token = stringRedisTemplate.opsForValue().get(access_token);
-        if(StringUtils.isEmpty(refresh_token))
-            throw new InvalidAccessTokenException("invalid access_token: " + access_token);
-
-        map.add("refresh_token", refresh_token);
-        map.add("grant_type", "refresh_token");
-        try {
-            return authenticated(scope, map, access_token);
-        } finally {
-            stringRedisTemplate.opsForValue().set(access_token, null); //access_token can be used to refresh only once.
+        String refreshToken = stringRedisTemplate.opsForValue().get(accessToken);
+        if(StringUtils.isEmpty(refreshToken)) {
+            throw new InvalidAccessTokenException("invalid accessToken: " + accessToken);
         }
+
+        map.add("refresh_token", refreshToken);
+        map.add("grant_type", "refresh_token");
+        OAuth2TokenVo oAuth2TokenVo = authenticated(scope, map, accessToken);
+        this.stringRedisTemplate.expire(accessToken, 0, TimeUnit.SECONDS); //accessToken can be used to refresh only once.
+        return oAuth2TokenVo;
     }
 
-    public OAuth2TokenVo authenticated(Config.Client.Scope scope, MultiValueMap<String, String> params, String access_token) {
+    public OAuth2TokenVo authenticated(Config.Client.Scope scope, MultiValueMap<String, String> params, String accessToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setBasicAuth(this.config.getClient().getId(), this.config.getClient().getSecret());
@@ -68,19 +67,20 @@ public class SecurityService {
                 , OAuth2TokenVo.class
         );
         if(response.getStatusCode().value() == HttpStatus.BAD_REQUEST.value()) {
-            if(StringUtils.isNotEmpty(access_token))
-                throw new InvalidAccessTokenException("invalid access_token: " + access_token);
-            else
+            if(StringUtils.isNotEmpty(accessToken)) {
+                throw new InvalidAccessTokenException("invalid accessToken: " + accessToken);
+            } else {
                 throw new InvalidUsernamePasswordException("invalid username password");
+            }
         } else if(!response.getStatusCode().is2xxSuccessful()) {
             throw new InternalServerException("exception response status code: " + response.getStatusCode() + ", " + response.getBody());
         }
 
         OAuth2TokenVo oathToken = response.getBody();
 
-        stringRedisTemplate.opsForValue().set(oathToken.getAccess_token(), oathToken.getRefresh_token(), scope.getTimeout(), TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(oathToken.getAccessToken(), oathToken.getRefreshToken(), scope.getTimeout(), TimeUnit.SECONDS);
 
-        oathToken.setRefresh_token(null);
+        oathToken.setRefreshToken(null);
         return oathToken;
     }
 

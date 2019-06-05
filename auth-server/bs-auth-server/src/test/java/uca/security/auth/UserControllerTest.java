@@ -183,28 +183,28 @@ public class UserControllerTest {
 
     }
 
-    private String login_and_get_access_token(String scope) throws Exception {
+    private String loginAndGetAccessToken(String scope) throws Exception {
         String resultString = passwordLogin(scope)
                 .andReturn().getResponse().getContentAsString();
-        return access_token(resultString);
+        return accessToken(resultString);
     }
 
-    private String access_token(String responseBody) {
+    private String accessToken(String responseBody) {
         JacksonJsonParser jsonParser = new JacksonJsonParser();
         return jsonParser.parseMap(responseBody).get("access_token").toString();
     }
 
-    private String refresh_token(String responseBody) {
+    private String refreshToken(String responseBody) {
         JacksonJsonParser jsonParser = new JacksonJsonParser();
         return jsonParser.parseMap(responseBody).get("refresh_token").toString();
     }
 
     @Test
     public void userCredential() throws Exception {
-        String access_token = login_and_get_access_token("webclient");
+        String accessToken = loginAndGetAccessToken("webclient");
 
         this.mockMvc.perform(get("/user")
-                .header("Authorization", "Bearer " + access_token)
+                .header("Authorization", "Bearer " + accessToken)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andExpect(status().isOk())
@@ -230,27 +230,27 @@ public class UserControllerTest {
     @Test
     public void oauthLogout() throws Exception {
         String responseBody = passwordLogin("webclient").andReturn().getResponse().getContentAsString();
-        String access_token = access_token(responseBody);
-        String refresh_token = refresh_token(responseBody);
+        String accessToken = accessToken(responseBody);
+        String refreshToken = refreshToken(responseBody);
 
         //登录完是可以成功获取用户信息的
         this.mockMvc.perform(get("/user")
-                .header("Authorization", "Bearer " + access_token)
+                .header("Authorization", "Bearer " + accessToken)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andExpect(status().isOk());
 
         //可以刷新access_token
-        responseBody = refreshTokenLogin(refresh_token)
+        responseBody = refreshTokenLogin(refreshToken)
                 .andExpect(status().isOk())
         .andReturn().getResponse().getContentAsString()
         ;
-        access_token = access_token(responseBody);
-        refresh_token = refresh_token(responseBody);
+        accessToken = accessToken(responseBody);
+        refreshToken = refreshToken(responseBody);
 
         //logout
         this.mockMvc.perform(post("/oauth/logout")
-                .header("Authorization", "Bearer " + access_token)
+                .header("Authorization", "Bearer " + accessToken)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andExpect(status().isNoContent())
@@ -261,13 +261,13 @@ public class UserControllerTest {
 
         //不能获取用户信息
         this.mockMvc.perform(get("/user")
-                .header("Authorization", "Bearer " + access_token)
+                .header("Authorization", "Bearer " + accessToken)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andExpect(status().isUnauthorized());
 
         //不能刷新用户的access token
-        refreshTokenLogin(refresh_token)
+        refreshTokenLogin(refreshToken)
                 .andExpect(status().isBadRequest());
 
     }
@@ -275,31 +275,31 @@ public class UserControllerTest {
     @Test
     public void refreshAccessToken2GetUserCredential() throws Exception {
         String responseBody = passwordLogin("webclient").andReturn().getResponse().getContentAsString();
-        String access_token = access_token(responseBody);
-        String refresh_token = refresh_token(responseBody);
+        String accessToken = accessToken(responseBody);
+        String refreshToken = refreshToken(responseBody);
 
         TimeUnit.SECONDS.sleep(ACCESS_TOKEN_VALIDITY_SECONDS + 1);
 
         // invalid access_token test
         this.mockMvc.perform(get("/user")
-                .header("Authorization", "Bearer " + access_token)
+                .header("Authorization", "Bearer " + accessToken)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andExpect(status().isUnauthorized());
 
         // obtain new access_token with valid refresh_token
-        responseBody = refreshTokenLogin(refresh_token)
+        responseBody = refreshTokenLogin(refreshToken)
         .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
-        String access_token2 = access_token(responseBody);
-        String refresh_token2 = refresh_token(responseBody);
-        assertEquals(refresh_token, refresh_token2);
-        assertNotEquals(access_token, access_token2);
+        String accessToken2 = accessToken(responseBody);
+        String refreshToken2 = refreshToken(responseBody);
+        assertEquals(refreshToken, refreshToken2);
+        assertNotEquals(accessToken, accessToken2);
 
         // new valid access_token test
         this.mockMvc.perform(get("/user")
-                .header("Authorization", "Bearer " + access_token2)
+                .header("Authorization", "Bearer " + accessToken2)
                 .accept(MediaType.APPLICATION_JSON_UTF8)
         )
                 .andExpect(status().isOk());
@@ -308,31 +308,31 @@ public class UserControllerTest {
         TimeUnit.SECONDS.sleep(REFRESH_TOKEN_VALIDITY_SECONDS - (ACCESS_TOKEN_VALIDITY_SECONDS + 1) + 1);
 
         // refresh_token timeout test
-        refreshTokenLogin(refresh_token2)
+        refreshTokenLogin(refreshToken2)
                 .andExpect(status().isUnauthorized());
     }
 
     @Test
     public void multiClientLogin4SameUser() throws Exception {
-        String web_access_token = login_and_get_access_token("webclient");
+        String webAccessToken = loginAndGetAccessToken("webclient");
 
-        String mobile_access_token = login_and_get_access_token("mobileclient");
+        String mobileAccessToken = loginAndGetAccessToken("mobileclient");
 
-        assertNotEquals(web_access_token, mobile_access_token);
+        assertNotEquals(webAccessToken, mobileAccessToken);
     }
 
 
     @Test
     public void sameClientLogin4SameUser() throws Exception {
-        String web_access_token = login_and_get_access_token("webclient");
-        String web_access_token2 = login_and_get_access_token("webclient");
+        String webAccessToken = loginAndGetAccessToken("webclient");
+        String webAccessToken2 = loginAndGetAccessToken("webclient");
 
-        assertEquals(web_access_token, web_access_token2);
+        assertEquals(webAccessToken, webAccessToken2);
 
-        String mobile_access_token = login_and_get_access_token("mobileclient");
-        String mobile_access_token2 = login_and_get_access_token("mobileclient");
-        assertEquals(mobile_access_token, mobile_access_token2);
+        String mobileAccessToken = loginAndGetAccessToken("mobileclient");
+        String mobileAccessToken2 = loginAndGetAccessToken("mobileclient");
+        assertEquals(mobileAccessToken, mobileAccessToken2);
 
-        assertNotEquals(web_access_token, mobile_access_token);
+        assertNotEquals(webAccessToken, mobileAccessToken);
     }
 }
