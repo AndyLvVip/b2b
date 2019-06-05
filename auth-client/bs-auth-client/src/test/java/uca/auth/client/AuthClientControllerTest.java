@@ -102,7 +102,7 @@ public class AuthClientControllerTest {
 
     @Test
     public void genSecurityCode() throws Exception {
-        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
+        @SuppressWarnings("unchecked") ValueOperations<String, String> valueOperations = Mockito.mock(ValueOperations.class);
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         doNothing().when(valueOperations).set(anyString(), anyString());
         this.mockMvc.perform(post("/securityCode/gen"))
@@ -120,7 +120,7 @@ public class AuthClientControllerTest {
         SecurityCodeReqVo reqVo = new SecurityCodeReqVo();
         reqVo.setKey(StdStringUtils.uuid());
         reqVo.setValue("12ab");
-        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
+        @SuppressWarnings("unchecked") ValueOperations<String, String> valueOperations = Mockito.mock(ValueOperations.class);
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         doNothing().when(valueOperations).set(anyString(), anyString());
         doNothing().when(securityCodeService).validateSecurityCode(any(SecurityCodeReqVo.class));
@@ -151,7 +151,7 @@ public class AuthClientControllerTest {
 
     @Test
     public void mobileLogin() throws Exception {
-        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
+        @SuppressWarnings("unchecked") ValueOperations<String, String> valueOperations = Mockito.mock(ValueOperations.class);
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         doNothing().when(valueOperations).set(anyString(), anyString());
         loginFromMobile()
@@ -173,7 +173,7 @@ public class AuthClientControllerTest {
         SecurityCodeReqVo reqVo = new SecurityCodeReqVo();
         reqVo.setKey(StdStringUtils.uuid());
         reqVo.setValue("12ab");
-        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
+        @SuppressWarnings("unchecked") ValueOperations<String, String> valueOperations = Mockito.mock(ValueOperations.class);
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get(anyString())).thenReturn(StdStringUtils.uuid());
         doNothing().when(valueOperations).set(anyString(), anyString());
@@ -202,7 +202,7 @@ public class AuthClientControllerTest {
 
     @Test
     public void mobileRefreshToken() throws Exception {
-        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
+        @SuppressWarnings("unchecked") ValueOperations<String, String> valueOperations = Mockito.mock(ValueOperations.class);
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get(anyString())).thenReturn(StdStringUtils.uuid());
         doNothing().when(valueOperations).set(anyString(), anyString());

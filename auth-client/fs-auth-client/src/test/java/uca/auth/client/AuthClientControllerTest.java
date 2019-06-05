@@ -78,7 +78,7 @@ public class AuthClientControllerTest {
         )
         ).thenReturn(response);
 
-        ValueOperations<String, String> valueOperations = (ValueOperations<String, String>) Mockito.mock(ValueOperations.class);
+        @SuppressWarnings("unchecked") ValueOperations<String, String> valueOperations = Mockito.mock(ValueOperations.class);
         when(stringRedisTemplate.opsForValue()).thenReturn(valueOperations);
         when(valueOperations.get(anyString())).thenReturn(StdStringUtils.uuid());
         doNothing().when(valueOperations).set(anyString(), anyString());
