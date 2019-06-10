@@ -29,6 +29,8 @@ import java.util.Arrays;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -73,7 +75,7 @@ public class MenuControllerTest {
     public void fetchOwnMenus() throws Exception {
         Permission permission = new Permission();
         permission.setMenuId(2L);
-        permission.setPermission(1L);
+        permission.setPermission(1);
         String accessToken = StdStringUtils.uuid();
         StdSimpleUser andy = CustomizationConfiguration.andy();
         doReturn(Arrays.asList(permission)).when(permissionService).fetchOwnPermissions(andy.getId());
@@ -101,7 +103,10 @@ public class MenuControllerTest {
         )
                 .andExpect(status().isOk())
                 .andDo(CustomizationConfiguration.restDocument(
-                        responseFields(
+                        requestHeaders(
+                                headerWithName("Authorization").description("access token")
+                        )
+                        , responseFields(
                                 fieldWithPath("[].id").description("菜单id")
                                 , fieldWithPath("[].icon").description("菜单图标")
                                 , fieldWithPath("[].name").description("菜单名")

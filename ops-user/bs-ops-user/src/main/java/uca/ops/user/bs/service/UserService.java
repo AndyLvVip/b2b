@@ -1,6 +1,7 @@
 package uca.ops.user.bs.service;
 
 import io.seata.spring.annotation.GlobalTransactional;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uca.base.bs.user.StdUser;
@@ -12,6 +13,7 @@ import uca.ops.user.bs.repository.UserRepository;
 import uca.ops.user.bs.vo.UserRegisterVo;
 import uca.ops.user.domain.User;
 
+import java.util.Collections;
 import java.util.List;
 
 import static uca.base.constant.Constants.SYSTEM;
@@ -69,4 +71,10 @@ public class UserService {
         authServerFeignClient.register(vo.getStdSimpleUser());
     }
 
+    public List<User> fetchList(List<String> userIds) {
+        if(CollectionUtils.isEmpty(userIds)) {
+            return Collections.emptyList();
+        }
+        return userRepository.fetchList(userIds);
+    }
 }

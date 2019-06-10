@@ -4,10 +4,7 @@
 package jooq.generated.ops.sys;
 
 
-import jooq.generated.ops.sys.tables.Menu;
-import jooq.generated.ops.sys.tables.Permission;
-import jooq.generated.ops.sys.tables.Role;
-import jooq.generated.ops.sys.tables.UserRole;
+import jooq.generated.ops.sys.tables.*;
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
@@ -31,7 +28,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 981967687;
+    private static final long serialVersionUID = -894449234;
 
     /**
      * The reference instance of <code></code>
@@ -47,6 +44,11 @@ public class DefaultSchema extends SchemaImpl {
      * The table <code>permission</code>.
      */
     public final Permission PERMISSION = jooq.generated.ops.sys.tables.Permission.PERMISSION;
+
+    /**
+     * The table <code>permission_unit</code>.
+     */
+    public final PermissionUnit PERMISSION_UNIT = jooq.generated.ops.sys.tables.PermissionUnit.PERMISSION_UNIT;
 
     /**
      * The table <code>role</code>.
@@ -85,6 +87,7 @@ public class DefaultSchema extends SchemaImpl {
         return Arrays.<Table<?>>asList(
             Menu.MENU,
             Permission.PERMISSION,
+            PermissionUnit.PERMISSION_UNIT,
             Role.ROLE,
             UserRole.USER_ROLE);
     }

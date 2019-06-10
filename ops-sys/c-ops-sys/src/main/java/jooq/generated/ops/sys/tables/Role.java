@@ -31,7 +31,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Role extends TableImpl<RoleRecord> {
 
-    private static final long serialVersionUID = -1623016235;
+    private static final long serialVersionUID = 57052378;
 
     /**
      * The reference instance of <code>role</code>
@@ -55,6 +55,11 @@ public class Role extends TableImpl<RoleRecord> {
      * The column <code>role.name</code>.
      */
     public final TableField<RoleRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR(50).nullable(false), this, "");
+
+    /**
+     * The column <code>role.remark</code>.
+     */
+    public final TableField<RoleRecord, String> REMARK = createField("remark", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
      * The column <code>role.created_on</code>.

@@ -205,9 +205,9 @@ public class FileItemControllerTest {
         assertNotNull(fileItemInfo);
         File destFile = fileUploadService.asFile(fileItemInfo.getFilePath());
         assertTrue(destFile.exists());
-        Path srcfilePath = Paths.get(destFile.getAbsolutePath()).getParent().resolve(this.fileUploadService.appendSuffix2Filename(destFile.getName(), SUFFIX_SRC));
-        File srcfile = new File(srcfilePath.toString());
-        assertTrue(srcfile.exists());
+        Path srcFilePath = Paths.get(destFile.getAbsolutePath()).getParent().resolve(this.fileUploadService.appendSuffix2Filename(destFile.getName(), SUFFIX_SRC));
+        File srcFile = new File(srcFilePath.toString());
+        assertTrue(srcFile.exists());
 
         Path file100Path = Paths.get(destFile.getAbsolutePath()).getParent().resolve(this.fileUploadService.appendSuffix2Filename(destFile.getName(), SUFFIX_100_100));
         File file100 = new File(file100Path.toString());
@@ -218,7 +218,7 @@ public class FileItemControllerTest {
         assertTrue(file800.exists());
 
         assertTrue(destFile.delete());
-        assertTrue(srcfile.delete());
+        assertTrue(srcFile.delete());
         assertTrue(file100.delete());
         assertTrue(file800.delete());
         assertTrue(file.delete());

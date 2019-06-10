@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoT
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
@@ -21,6 +20,7 @@ import uca.base.bs.user.StdUser;
 import uca.base.user.StdPermission;
 import uca.base.user.StdSimpleUser;
 import uca.ops.user.bs.CustomizationConfiguration;
+import uca.ops.user.bs.repository.UserRepository;
 import uca.ops.user.bs.service.UserService;
 import uca.ops.user.bs.vo.UserRegisterVo;
 import uca.ops.user.domain.User;
@@ -28,6 +28,7 @@ import uca.platform.StdStringUtils;
 import uca.platform.json.StdObjectMapper;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -41,8 +42,10 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.requestHe
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static uca.ops.user.bs.CustomizationConfiguration.andy;
+import static uca.ops.user.bs.CustomizationConfiguration.*;
 
 /**
  * Description:
@@ -64,7 +67,7 @@ public class UserControllerTest {
     @Autowired
     StdObjectMapper stdObjectMapper;
 
-    @MockBean
+    @SpyBean
     UserService userService;
 
     @SpyBean
@@ -75,6 +78,9 @@ public class UserControllerTest {
 
     @SpyBean
     PrincipalExtractor principalExtractor;
+
+    @SpyBean
+    UserRepository userRepository;
 
     @Before
     public void setUp() {
@@ -98,7 +104,7 @@ public class UserControllerTest {
                 .content(stdObjectMapper.toJson(user))
         )
                 .andExpect(status().isNoContent())
-                .andDo(CustomizationConfiguration.restDocument(
+                .andDo(restDocument(
                         requestFields(
                                 fieldWithPath("stdSimpleUser.username").description("登录名")
                                 , fieldWithPath("stdSimpleUser.name").description("姓名")
@@ -115,7 +121,7 @@ public class UserControllerTest {
     @Test
     public void userDetail4NoToken() throws Exception {
         StdUser andy = andy();
-        doReturn(CustomizationConfiguration.responseEntity(andy.getStdSimpleUser())).when(restTemplate).getForEntity(anyString(), any(Class.class));
+        doReturn(responseEntity(andy.getStdSimpleUser())).when(restTemplate).getForEntity(anyString(), any(Class.class));
         doReturn(andy).when(principalExtractor).extractPrincipal(any(Map.class));
 
         this.mockMvc.perform(get("/user/detail"))
@@ -125,7 +131,7 @@ public class UserControllerTest {
     @Test
     public void userDetail4NoPermission() throws Exception {
         StdUser andy = andy();
-        doReturn(CustomizationConfiguration.responseEntity(andy.getStdSimpleUser())).when(restTemplate).getForEntity(anyString(), any(Class.class));
+        doReturn(responseEntity(andy.getStdSimpleUser())).when(restTemplate).getForEntity(anyString(), any(Class.class));
         doReturn(andy).when(principalExtractor).extractPrincipal(any(Map.class));
 
         this.mockMvc.perform(get("/user/detail")
@@ -138,7 +144,7 @@ public class UserControllerTest {
     public void userDetail4InvalidPermission() throws Exception {
         StdUser andy = andy();
         andy.getStdPermissionList().add(new StdPermission(2, 1 << 4));
-        doReturn(CustomizationConfiguration.responseEntity(andy.getStdSimpleUser())).when(restTemplate).getForEntity(anyString(), any(Class.class));
+        doReturn(responseEntity(andy.getStdSimpleUser())).when(restTemplate).getForEntity(anyString(), any(Class.class));
         doReturn(andy).when(principalExtractor).extractPrincipal(any(Map.class));
 
         this.mockMvc.perform(get("/user/detail")
@@ -151,7 +157,7 @@ public class UserControllerTest {
     public void userDetail() throws Exception {
         StdUser andy = andy();
         andy.getStdPermissionList().add(new StdPermission(2, 1));
-        doReturn(CustomizationConfiguration.responseEntity(andy.getStdSimpleUser())).when(restTemplate).getForEntity(anyString(), any(Class.class));
+        doReturn(responseEntity(andy.getStdSimpleUser())).when(restTemplate).getForEntity(anyString(), any(Class.class));
         doReturn(andy).when(principalExtractor).extractPrincipal(any(Map.class));
         User user = new User();
         user.setId(andy.getStdSimpleUser().getId());
@@ -171,7 +177,7 @@ public class UserControllerTest {
                 .header("Authorization", "Bearer " + StdStringUtils.uuid())
         )
                 .andExpect(status().isOk())
-                .andDo(CustomizationConfiguration.restDocument(
+                .andDo(restDocument(
                         requestHeaders(
                                 headerWithName("Authorization").description("Bearer Token")
                         )
@@ -186,5 +192,42 @@ public class UserControllerTest {
                                 , fieldWithPath("version").description("用户记录的版本号")
                         )
                 ));
+    }
+
+    @Test
+    public void fetchUserList() throws Exception {
+        StdUser andy = andy();
+        doReturn(responseEntity(andy.getStdSimpleUser())).when(restTemplate).getForEntity(anyString(), any(Class.class));
+        doReturn(andy).when(principalExtractor).extractPrincipal(any(Map.class));
+
+        String uid = StdStringUtils.uuid();
+
+        User user = new User();
+        user.setId(uid);
+        user.setName("张三");
+
+        List<User> users = new ArrayList<>();
+        users.add(user);
+
+        doReturn(users).when(userRepository).fetchList(any(List.class));
+
+        this.mockMvc.perform(get("/user/fetchList")
+                .header("Authorization", "Bearer " + StdStringUtils.uuid())
+                .param("userIds", uid)
+
+        ).andExpect(status().isOk())
+                .andDo(restDocument(
+                        requestHeaders(
+                                headerWithName("Authorization").description("Bearer Token")
+                        )
+                        , requestParameters(
+                                parameterWithName("userIds").description("用户id数组")
+                        )
+                        , responseFields(
+                                fieldWithPath("[].id").description("用户id")
+                                , fieldWithPath("[].name").description("姓名")
+                        )
+                ))
+        ;
     }
 }

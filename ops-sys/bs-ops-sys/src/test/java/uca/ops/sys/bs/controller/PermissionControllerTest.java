@@ -25,6 +25,8 @@ import java.util.Arrays;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -60,7 +62,7 @@ public class PermissionControllerTest {
     public void fetchOwnPermissions() throws Exception {
         Permission permission = new Permission();
         permission.setMenuId(2L);
-        permission.setPermission(1L + (1 << 1) + (1 << 2) + (1 << 3));
+        permission.setPermission(1 + (1 << 1) + (1 << 2) + (1 << 3));
         String accessToken = StdStringUtils.uuid();
         StdSimpleUser andy = CustomizationConfiguration.andy();
         doReturn(Arrays.asList(permission)).when(permissionService).fetchOwnPermissions(andy.getId());
@@ -72,7 +74,10 @@ public class PermissionControllerTest {
         )
                 .andExpect(status().isOk())
                 .andDo(CustomizationConfiguration.restDocument(
-                        responseFields(
+                        requestHeaders(
+                                headerWithName("Authorization").description("access token")
+                        )
+                        , responseFields(
                                 fieldWithPath("[].menuId").description("菜单id")
                                 , fieldWithPath("[].permission").description("对该菜单拥有的权限总和")
                         )

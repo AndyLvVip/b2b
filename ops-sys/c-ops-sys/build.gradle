@@ -35,7 +35,7 @@ jooq {
                 inputSchema = 'ops_sys'
                 outputSchemaToDefault = true
                 recordVersionFields = 'version'
-                includes = 'menu|permission|role|user_role'
+                includes = 'menu|permission|role|user_role|permission_unit'
                 forcedTypes {
                     forcedType {
                         name = 'Integer'

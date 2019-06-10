@@ -14,6 +14,7 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
@@ -39,6 +40,7 @@ import static uca.base.constant.Constants.USER;
 @EnableEurekaClient
 @EnableCircuitBreaker
 @EnableResourceServer
+@EnableFeignClients
 public class BsOpsSysApplication {
 
     @Bean

@@ -3,6 +3,7 @@ package uca.ops.sys.domain;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.collections4.CollectionUtils;
 import uca.base.domain.StdLongDomain;
 
 import javax.persistence.Column;
@@ -37,7 +38,14 @@ public class Menu extends StdLongDomain {
 
     private List<Menu> subMenus;
 
-    private static List<Menu> assembleSubMenus(List<Menu> allMenus) {
+    private List<PermissionUnit> permissionUnits;
+
+    public void linkPermissionUnits(List<PermissionUnit> permissionUnits) {
+        setPermissionUnits(permissionUnits.stream()
+                .filter(pu -> Objects.equals(getId(), pu.getMenuId())).collect(Collectors.toList()));
+    }
+
+    public static List<Menu> assembleSubMenus(List<Menu> allMenus) {
         List<Menu> level1Menu = allMenus.stream().filter(m -> null == m.getParentId()).collect(Collectors.toList());
 
         level1Menu.forEach(m ->
@@ -57,6 +65,24 @@ public class Menu extends StdLongDomain {
             return m;
         }).filter(m -> !m.getSubMenus().isEmpty())
                 .collect(Collectors.toList());
+    }
+
+    public Permission buildPermission(String roleId, List<PermissionUnit> dbPermissionUntis) {
+        if(CollectionUtils.isNotEmpty(permissionUnits)) {
+            List<String> grantedPermissionUnitIds = permissionUnits.stream()
+                    .map(PermissionUnit::getId)
+                    .collect(Collectors.toList());
+            if(CollectionUtils.isNotEmpty(grantedPermissionUnitIds)) {
+                int sumPermission = dbPermissionUntis.stream().filter(dpu -> grantedPermissionUnitIds.contains(dpu.getId()))
+                        .mapToInt(PermissionUnit::getUnit).sum();
+                Permission permission = new Permission();
+                permission.setMenuId(getId());
+                permission.setPermission(sumPermission);
+                permission.setRoleId(roleId);
+                return permission;
+            }
+        }
+        return null;
     }
 
 }

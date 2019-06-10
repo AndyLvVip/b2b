@@ -22,3 +22,8 @@ A `GET` request is used to fetch a user detail with corporate（用户详情）
 
 operation::user-detail[snippets='http-request,request-headers,curl-request,http-response,response-fields']
 
+=== 批量获取用户信息
+
+A `GET` request is used to fetch a batch of users
+
+operation::fetch-user-list[snippets='http-request,request-headers,request-fields,curl-request,http-response,response-fields']

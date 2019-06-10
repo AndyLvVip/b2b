@@ -1,10 +1,13 @@
 package uca.ops.sys.bs.service;
 
 import org.springframework.stereotype.Service;
+import uca.base.user.StdSimpleUser;
 import uca.ops.sys.bs.repository.PermissionRepository;
 import uca.ops.sys.domain.Permission;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Description:
@@ -23,5 +26,28 @@ public class PermissionService {
 
     public List<Permission> fetchOwnPermissions(String userId) {
         return this.permissionRepository.fetchPermissions(userId);
+    }
+
+    public List<Permission> fetchRolePermissions(String roleId) {
+        return this.permissionRepository.fetchRolePermissions(roleId);
+    }
+
+    public void savePermissions(String roleId, List<Permission> newPermissions, StdSimpleUser user) {
+        List<Permission> existingPermissions = fetchRolePermissions(roleId);
+
+        newPermissions.forEach(p -> {
+            Optional<Permission> optEp = existingPermissions.stream().filter(ep -> Objects.equals(ep.getMenuId(), p.getMenuId())).findAny();
+            if(optEp.isPresent()) {
+                Permission ep = optEp.get();
+                ep.edit(p);
+                permissionRepository.update(p, user.getUsername());
+            }else {
+                Permission np = new Permission();
+                np.create(roleId, p);
+                permissionRepository.insert(p, user.getUsername());
+            }
+        });
+
+        permissionRepository.delete(Permission.fetchToBeDeletedList(existingPermissions, newPermissions));
     }
 }

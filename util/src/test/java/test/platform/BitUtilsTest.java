@@ -24,4 +24,9 @@ public class BitUtilsTest {
         System.out.println(2 & 1);
         System.out.println(4 & 1);
     }
+
+    @Test
+    public void bitOr() {
+        System.out.println(1 | (1 << 1));
+    }
 }

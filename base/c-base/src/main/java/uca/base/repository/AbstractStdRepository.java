@@ -30,7 +30,7 @@ public abstract class AbstractStdRepository<R extends UpdatableRecord<R>, P exte
         object.setUpdatedOn(now);
         object.setCreatedBy(createdBy);
         object.setUpdatedBy(createdBy);
-        object.setVersion(1);
+        object.setVersion(0);
         super.insert(object);
     }
 

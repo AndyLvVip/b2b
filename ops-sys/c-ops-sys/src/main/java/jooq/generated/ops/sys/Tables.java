@@ -4,10 +4,7 @@
 package jooq.generated.ops.sys;
 
 
-import jooq.generated.ops.sys.tables.Menu;
-import jooq.generated.ops.sys.tables.Permission;
-import jooq.generated.ops.sys.tables.Role;
-import jooq.generated.ops.sys.tables.UserRole;
+import jooq.generated.ops.sys.tables.*;
 
 import javax.annotation.Generated;
 
@@ -34,6 +31,11 @@ public class Tables {
      * The table <code>permission</code>.
      */
     public static final Permission PERMISSION = jooq.generated.ops.sys.tables.Permission.PERMISSION;
+
+    /**
+     * The table <code>permission_unit</code>.
+     */
+    public static final PermissionUnit PERMISSION_UNIT = jooq.generated.ops.sys.tables.PermissionUnit.PERMISSION_UNIT;
 
     /**
      * The table <code>role</code>.

@@ -10,6 +10,7 @@ import uca.ops.user.bs.vo.UserRegisterVo;
 import uca.ops.user.domain.User;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * Description:
@@ -41,6 +42,12 @@ public class UserController {
     @PreAuthorize("@accessControlMenu.BASE_INFO_MENU.canView(#stdUser.stdPermissionList)")
     public User info(@AuthenticationPrincipal StdUser stdUser) {
         return userService.fetchUserDetail(stdUser.getStdSimpleUser().getId());
+    }
+
+    @GetMapping("/user/fetchList")
+    public List<User> fetchList(@RequestParam("userIds") List<String> userIds) {
+        List<User> result = userService.fetchList(userIds);
+        return result;
     }
 
 }

@@ -8,6 +8,9 @@ import uca.base.domain.StdStrDomain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Data
@@ -24,6 +27,22 @@ public class Permission extends StdStrDomain {
     private Long menuId;
 
     @Column(name = "permission")
-    private Long permission;
+    private Integer permission;
+
+    public static List<Permission> fetchToBeDeletedList(List<Permission> oldPermissions, List<Permission> newPermissions) {
+        return oldPermissions.stream()
+                .filter(op -> !newPermissions.stream().anyMatch(np -> Objects.equals(np.getMenuId(), op.getMenuId())))
+                .collect(Collectors.toList());
+    }
+
+    public void create(String roleId, Permission p) {
+        setRoleId(roleId);
+        setMenuId(p.getMenuId());
+        setPermission(p.getPermission());
+    }
+
+    public void edit(Permission p) {
+        setPermission(p.getPermission());
+    }
 
 }

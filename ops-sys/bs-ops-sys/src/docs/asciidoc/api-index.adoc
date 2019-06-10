@@ -22,7 +22,7 @@ operation::link-user-role[snippets='http-request,path-parameters,request-fields,
 
 A `GET` request is used to fetch user permissions（获取用户所有权限）
 
-operation::fetch-own-permissions[snippets='http-request,curl-request,http-response,response-fields']
+operation::fetch-own-permissions[snippets='http-request,request-headers,curl-request,http-response,response-fields']
 
 == 菜单
 
@@ -30,4 +30,42 @@ operation::fetch-own-permissions[snippets='http-request,curl-request,http-respon
 
 A `GET` request is used to fetch user menus（获取用户所有菜单）
 
-operation::fetch-own-menus[snippets='http-request,curl-request,http-response,response-fields']
+operation::fetch-own-menus[snippets='http-request,request-headers,curl-request,http-response,response-fields']
+
+== 角色
+
+=== 角色列表
+
+A `GET` request is used to search roles
+
+operation::search-roles[snippets='http-request,request-headers,request-parameters,curl-request,http-response,response-fields']
+
+=== 创建角色
+
+A `POST` request is used to create role
+
+operation::create-role[snippets='http-request,request-headers,request-fields,curl-request,http-response']
+
+=== 编辑角色
+
+A `PUT` request is used to edit role
+
+operation::edit-role[snippets='http-request,request-headers,request-fields,curl-request,http-response']
+
+=== 删除角色
+
+A `DELETE` request is used to delete role
+
+operation::delete-role[snippets='http-request,request-headers,request-fields,curl-request,http-response']
+
+=== 获取指定角色的所有权限
+
+A `GET` request is used to fetch permission for role
+
+operation::fetch-permission-for-role[snippets='http-request,request-headers,path-parameters,curl-request,http-response,response-fields']
+
+=== 编辑指定角色的所有权限
+
+A `PUT` request is used to edit permission for role
+
+operation::edit-permission-for-role[snippets='http-request,request-headers,path-parameters,request-fields,curl-request,http-response']

@@ -18,6 +18,7 @@ create table menu (
                       version int not null
 ) engine = InnoDB, charset = utf8mb4;
 
+
 insert into menu(id, name, url, parent_id, sequence, icon, created_on, created_by, updated_on, updated_by, version)
 values (1, '交易', '#', null, 1, null, now(), 'admin', now(), 'admin', 1),
        (2, '订单', '/bs-order/order', 1, 1, null, now(), 'admin', now(), 'admin', 1),
@@ -51,10 +52,10 @@ values (1, '交易', '#', null, 1, null, now(), 'admin', now(), 'admin', 1),
        (30, '会员投诉', '/bs-plat-service/complain', 27, 3, null, now(), 'admin', now(), 'admin', 1),
        (31, '会员建议', '/bs-plat-service/suggestion', 27, 4, null, now(), 'admin', now(), 'admin', 1),
        (32, '客服', '#', null, 7, null, now(), 'admin', now(), 'admin', 1),
-       (33, '运营账号', '/bs-plat-sys/user', 32, 1, null, now(), 'admin', now(), 'admin', 1),
-       (34, '运营角色', '/bs-plat-sys/role', 32, 2, null, now(), 'admin', now(), 'admin', 1),
-       (35, '数据字典', '/bs-plat-sys/dictionary', 32, 3, null, now(), 'admin', now(), 'admin', 1),
-       (36, '日记', '/bs-plat-sys/log', 32, 4, null, now(), 'admin', now(), 'admin', 1)
+       (33, '运营账号', '/bs-ops-sys/user', 32, 1, null, now(), 'admin', now(), 'admin', 1),
+       (34, '运营角色', '/bs-ops-sys/role', 32, 2, null, now(), 'admin', now(), 'admin', 1),
+       (35, '数据字典', '/bs-ops-sys/dictionary', 32, 3, null, now(), 'admin', now(), 'admin', 1),
+       (36, '日记', '/bs-ops-sys/log', 32, 4, null, now(), 'admin', now(), 'admin', 1)
 ;
 
 
@@ -63,6 +64,7 @@ drop table if exists role;
 create table role (
                       id char(36) not null primary key ,
                       name varchar(50) not null,
+                      remark varchar(255),
                       created_on datetime(3) not null,
                       created_by varchar(30) not null,
                       updated_on datetime(3) not null,
@@ -70,8 +72,8 @@ create table role (
                       version int not null
 ) engine = InnoDB, charset = utf8mb4;
 
-insert into role(id, name, created_on, created_by, updated_on, updated_by, version)
-values('admin', '管理员', now(), 'admin', now(), 'admin', 1);
+insert into role(id, name, remark, created_on, created_by, updated_on, updated_by, version)
+values('admin', '管理员', '拥有最高权限的角色', now(), 'admin', now(), 'admin', 1);
 
 
 drop table if exists permission;
@@ -79,7 +81,7 @@ create table permission (
                             id char(36) not null primary key ,
                             role_id char(36) not null,
                             menu_id bigint not null,
-                            permission bigint not null,
+                            permission int not null,
                             created_on datetime(3) not null,
                             created_by varchar(30) not null,
                             updated_on datetime(3) not null,
@@ -148,149 +150,63 @@ create table permission_unit(
 insert into permission_unit (id, menu_id, unit, label, created_on, created_by, updated_on, updated_by, version)
 values
 (uuid(), 2, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 2, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 2, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 2, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 3, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 3, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 3, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 3, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 5, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 5, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 5, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 5, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 6, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 6, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 6, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 6, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 7, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 7, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 7, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 7, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 9, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 9, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 9, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 9, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 11, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 11, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 11, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 11, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 12, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 12, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 12, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 12, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 13, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 13, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 13, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 13, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 14, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 14, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 14, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 14, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 15, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 15, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 15, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 15, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 17, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 17, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 17, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 17, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 18, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 18, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 18, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 18, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 19, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 19, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 19, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 19, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 20, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 20, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 20, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 20, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 21, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 21, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 21, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 21, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 22, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 22, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 22, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 22, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 23, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 23, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 23, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 23, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 24, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 24, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 24, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 24, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 25, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 25, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 25, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 25, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 26, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 26, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 26, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 26, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 28, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 28, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 28, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 28, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 29, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 29, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 29, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 29, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 30, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 30, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 30, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 30, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 31, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 31, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 31, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 31, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 33, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 33, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 33, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 33, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 34, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 34, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 34, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 34, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 35, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 35, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 35, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 35, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
 
-(uuid(), 36, 1, '查看', now(), 'admin', now(), 'admin', 1),
-(uuid(), 36, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
-(uuid(), 36, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
-(uuid(), 36, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1)
+(uuid(), 36, 1, '查看', now(), 'admin', now(), 'admin', 1)
+
 ;
 
 -- -----------------------------------------------------

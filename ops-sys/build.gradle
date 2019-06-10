@@ -11,6 +11,8 @@ subprojects {
         implementation "io.seata:seata-spring:${seataVersion}"
         implementation "net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderVersion}"
         implementation 'javax.persistence:javax.persistence-api'
+        implementation 'org.springframework.data:spring-data-commons'
+        implementation "org.apache.commons:commons-collections4:${collections4Version}"
 
         implementation "com.alibaba:druid-spring-boot-starter:${druidSpringBootVersion}"
 

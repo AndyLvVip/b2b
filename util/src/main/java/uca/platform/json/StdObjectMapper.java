@@ -1,6 +1,7 @@
 package uca.platform.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import uca.platform.exception.InternalServerException;
 
@@ -16,6 +17,14 @@ public class StdObjectMapper {
 
     public StdObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+    }
+
+    public <T> T convertValue(Object obj, Class<T> returnType) {
+        return this.objectMapper.convertValue(obj, returnType);
+    }
+
+    public <T> T convertValue(Object obj, TypeReference<T> returnType) {
+        return this.objectMapper.convertValue(obj, returnType);
     }
 
     public String toJson(Object object) {

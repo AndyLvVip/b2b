@@ -1,11 +1,13 @@
 package uca.ops.sys.bs.service;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uca.base.constant.Constants;
 import uca.ops.sys.bs.repository.UserRoleRepository;
 import uca.ops.sys.domain.UserRole;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,5 +33,12 @@ public class UserRoleService {
             userRole.setRoleId(roleId);
             userRoleRepository.insert(userRole, Constants.SYSTEM);
         });
+    }
+
+    public List<UserRole> fetchUserRoles(List<String> roleIds) {
+        if(CollectionUtils.isEmpty(roleIds)) {
+            return Collections.emptyList();
+        }
+        return userRoleRepository.fetchList(roleIds);
     }
 }

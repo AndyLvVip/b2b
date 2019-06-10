@@ -12,4 +12,14 @@ public class Constants {
 
     public static final String USER = "user";
 
+    public static class PermissionUnit {
+        public static final int VIEW = 1;
+
+        public static final int CREATE = 1 << 1;
+
+        public static final int EDIT = 1 << 2;
+
+        public static final int DELETE = 1 << 3;
+    }
+
 }

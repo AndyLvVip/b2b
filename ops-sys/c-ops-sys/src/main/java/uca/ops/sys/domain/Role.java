@@ -16,10 +16,25 @@ import javax.persistence.Table;
 @Entity
 public class Role extends StdStrDomain {
 
-    @Column(name = "corporate_id")
-    private String corporateId;
-
     @Column(name = "name")
     private String name;
+
+    @Column(name = "remark")
+    private String remark;
+
+    public void create(Role role) {
+        setName(role.getName());
+        setRemark(role.getRemark());
+    }
+
+    public void edit(Role role) {
+        setName(role.getName());
+        setRemark(role.getRemark());
+        setVersion(role.getVersion());
+    }
+
+    public void delete(Integer version) {
+        setVersion(version);
+    }
 
 }

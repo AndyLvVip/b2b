@@ -1,6 +1,6 @@
 package uca.base.menu;
 
-import uca.base.menu.vo.PermissionUnitVo;
+import uca.base.constant.Constants;
 import uca.base.user.StdPermission;
 
 import java.util.List;
@@ -15,26 +15,26 @@ public abstract class BaseMenu {
 
     public abstract int menuId();
 
-    protected boolean hasPermission(List<StdPermission> permissionVoList, PermissionUnitVo permissionUnitVo) {
+    protected boolean hasPermission(List<StdPermission> permissionVoList, int permissionUnit) {
         return permissionVoList.stream().filter(p -> p.getMenuId() == menuId())
-                .anyMatch(p -> (p.getPermission() & permissionUnitVo.getPermissionUnit()) == permissionUnitVo.getPermissionUnit())
+                .anyMatch(p -> (p.getPermission() & permissionUnit) == permissionUnit)
                 ;
     }
 
     public boolean canView(List<StdPermission> permissionVoList) {
-        return hasPermission(permissionVoList, PermissionUnitVo.VIEW);
+        return hasPermission(permissionVoList, Constants.PermissionUnit.VIEW);
     }
 
     public boolean canCreate(List<StdPermission> permissionVoList) {
-        return hasPermission(permissionVoList, PermissionUnitVo.CREATE);
+        return hasPermission(permissionVoList, Constants.PermissionUnit.CREATE);
     }
 
     public boolean canEdit(List<StdPermission> permissionVoList) {
-        return hasPermission(permissionVoList, PermissionUnitVo.EDIT);
+        return hasPermission(permissionVoList, Constants.PermissionUnit.EDIT);
     }
 
     public boolean canDelete(List<StdPermission> permissionVoList) {
-        return hasPermission(permissionVoList, PermissionUnitVo.DELETE);
+        return hasPermission(permissionVoList, Constants.PermissionUnit.DELETE);
     }
 
 }

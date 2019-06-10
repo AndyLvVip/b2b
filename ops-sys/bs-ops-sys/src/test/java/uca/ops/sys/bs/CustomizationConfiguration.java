@@ -13,9 +13,12 @@ import org.springframework.restdocs.snippet.Snippet;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import uca.base.user.StdSimpleUser;
+import uca.ops.sys.bs.feign.OpsUserFeignClient;
+import uca.ops.sys.vo.UserVo;
 import uca.platform.StdStringUtils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -62,5 +65,19 @@ public class CustomizationConfiguration implements RestDocsMockMvcConfigurationC
         Map<String, StdSimpleUser> userMap = new HashMap<>();
         userMap.put(USER, user);
         return new ResponseEntity<>(userMap, HttpStatus.OK);
+    }
+
+    @Bean
+    @Primary
+    public MockOpsUserFeignClient opsUserFeignClient() {
+        return new MockOpsUserFeignClient();
+    }
+
+    public static class MockOpsUserFeignClient implements OpsUserFeignClient {
+
+        @Override
+        public List<UserVo> fetchList(List<String> userIds) {
+            return null;
+        }
     }
 }

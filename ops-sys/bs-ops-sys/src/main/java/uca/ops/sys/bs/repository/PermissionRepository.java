@@ -35,4 +35,10 @@ public class PermissionRepository extends StdStrRepository<PermissionRecord, Per
                 .fetchInto(Permission.class)
                 ;
     }
+
+    public List<Permission> fetchRolePermissions(String roleId) {
+        return dsl.selectFrom(PERMISSION)
+                .where(PERMISSION.ROLE_ID.eq(roleId))
+                .fetchInto(Permission.class);
+    }
 }
