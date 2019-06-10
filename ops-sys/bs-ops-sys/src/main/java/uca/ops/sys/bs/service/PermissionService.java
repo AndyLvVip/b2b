@@ -1,6 +1,7 @@
 package uca.ops.sys.bs.service;
 
 import org.springframework.stereotype.Service;
+import uca.base.user.StdPermission;
 import uca.base.user.StdSimpleUser;
 import uca.ops.sys.bs.repository.PermissionRepository;
 import uca.ops.sys.domain.Permission;
@@ -8,6 +9,7 @@ import uca.ops.sys.domain.Permission;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Description:
@@ -26,6 +28,10 @@ public class PermissionService {
 
     public List<Permission> fetchOwnPermissions(String userId) {
         return this.permissionRepository.fetchPermissions(userId);
+    }
+
+    public List<StdPermission> fetchOwnStdPermission(String userId) {
+        return fetchOwnPermissions(userId).stream().map(Permission::asStdPermission).collect(Collectors.toList());
     }
 
     public List<Permission> fetchRolePermissions(String roleId) {

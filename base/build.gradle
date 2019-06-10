@@ -11,6 +11,7 @@ subprojects {
         implementation 'com.fasterxml.jackson.core:jackson-annotations'
         implementation "org.redisson:redisson:${redissonVersion}"
         implementation 'org.springframework.data:spring-data-redis'
+        implementation 'org.springframework:spring-web'
         
         testImplementation 'junit:junit'
     }

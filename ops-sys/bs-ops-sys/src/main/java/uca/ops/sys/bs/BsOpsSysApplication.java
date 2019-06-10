@@ -18,6 +18,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
@@ -41,6 +42,7 @@ import static uca.base.constant.Constants.USER;
 @EnableCircuitBreaker
 @EnableResourceServer
 @EnableFeignClients
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class BsOpsSysApplication {
 
     @Bean

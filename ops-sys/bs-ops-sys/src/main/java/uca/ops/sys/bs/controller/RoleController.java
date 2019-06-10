@@ -3,6 +3,7 @@ package uca.ops.sys.bs.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import uca.base.user.StdSimpleUser;
@@ -28,18 +29,21 @@ public class RoleController {
     }
 
     @GetMapping("/role")
-    public Page<UserRoleRespVo> search(UserRoleReqVo vo, Pageable pageable) {
+    @PreAuthorize("@accessControl.roleMenu.canView(@permissionService.fetchOwnStdPermission(#user.getId()))")
+    public Page<UserRoleRespVo> search(@AuthenticationPrincipal StdSimpleUser user, UserRoleReqVo vo, Pageable pageable) {
         return roleService.search(vo, pageable);
     }
 
     @PostMapping("/role")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("@accessControl.roleMenu.canCreate(@permissionService.fetchOwnStdPermission(#user.getId()))")
     public void create(@RequestBody Role role, @AuthenticationPrincipal StdSimpleUser user) {
         roleService.create(role, user);
     }
 
     @PutMapping("/role/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("@accessControl.roleMenu.canEdit(@permissionService.fetchOwnStdPermission(#user.getId()))")
     public void edit(@PathVariable("id") String id, @RequestBody Role role, @AuthenticationPrincipal StdSimpleUser user) {
         role.setId(id);
         roleService.edit(role, user);
@@ -47,18 +51,21 @@ public class RoleController {
 
     @DeleteMapping("/role/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable("id") String id, @RequestBody Role role) {
+    @PreAuthorize("@accessControl.roleMenu.canDelete(@permissionService.fetchOwnStdPermission(#user.getId()))")
+    public void delete(@PathVariable("id") String id, @RequestBody Role role, @AuthenticationPrincipal StdSimpleUser user) {
         role.setId(id);
         roleService.delete(role);
     }
 
     @GetMapping("/role/{id}/permission")
-    public RoleMenuVo fetchPermission4Role(@PathVariable("id") String id) {
+    @PreAuthorize("@accessControl.roleMenu.canViewPermission(@permissionService.fetchOwnStdPermission(#user.getId()))")
+    public RoleMenuVo fetchPermission4Role(@PathVariable("id") String id, @AuthenticationPrincipal StdSimpleUser user) {
         return roleService.fetchPermission4Role(id);
     }
 
     @PutMapping("/role/{id}/permission")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("@accessControl.roleMenu.canEditPermission(@permissionService.fetchOwnStdPermission(#user.getId()))")
     public void editPermission4Role(@PathVariable("id") String id, @RequestBody RoleMenuVo vo, @AuthenticationPrincipal StdSimpleUser user) {
         vo.validateRole();
         vo.getRole().setId(id);

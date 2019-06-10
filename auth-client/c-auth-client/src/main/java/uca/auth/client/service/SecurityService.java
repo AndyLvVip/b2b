@@ -6,12 +6,13 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import uca.auth.client.config.Config;
-import uca.auth.client.exception.InternalServerException;
 import uca.auth.client.exception.InvalidAccessTokenException;
 import uca.auth.client.exception.InvalidUsernamePasswordException;
 import uca.auth.client.vo.OAuth2TokenVo;
+import uca.platform.exception.InternalServerException;
 
 import java.util.concurrent.TimeUnit;
 
@@ -46,7 +47,7 @@ public class SecurityService {
         MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
         String refreshToken = stringRedisTemplate.opsForValue().get(accessToken);
         if(StringUtils.isEmpty(refreshToken)) {
-            throw new InvalidAccessTokenException("invalid accessToken: " + accessToken);
+            throw new InvalidAccessTokenException("无效的access token");
         }
 
         map.add("refresh_token", refreshToken);
@@ -61,19 +62,21 @@ public class SecurityService {
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         headers.setBasicAuth(this.config.getClient().getId(), this.config.getClient().getSecret());
         HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<>(params, headers);
-        ResponseEntity<OAuth2TokenVo> response = restTemplate.exchange(this.config.getClient().getTokenUrl()
-                , HttpMethod.POST
-                , entity
-                , OAuth2TokenVo.class
-        );
-        if(response.getStatusCode().value() == HttpStatus.BAD_REQUEST.value()) {
-            if(StringUtils.isNotEmpty(accessToken)) {
-                throw new InvalidAccessTokenException("invalid accessToken: " + accessToken);
+        ResponseEntity<OAuth2TokenVo> response;
+        try {
+            response = restTemplate.exchange(this.config.getClient().getTokenUrl()
+                    , HttpMethod.POST
+                    , entity
+                    , OAuth2TokenVo.class
+            );
+        } catch (HttpClientErrorException.BadRequest e) {
+            if (StringUtils.isNotEmpty(accessToken)) {
+                throw new InvalidAccessTokenException("无效的access token");
             } else {
-                throw new InvalidUsernamePasswordException("invalid username password");
+                throw new InvalidUsernamePasswordException("用户名或密码错误");
             }
-        } else if(!response.getStatusCode().is2xxSuccessful()) {
-            throw new InternalServerException("exception response status code: " + response.getStatusCode() + ", " + response.getBody());
+        } catch (Exception e) {
+            throw new InternalServerException(e);
         }
 
         OAuth2TokenVo oathToken = response.getBody();

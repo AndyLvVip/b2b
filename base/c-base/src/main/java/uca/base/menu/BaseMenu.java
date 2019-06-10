@@ -15,26 +15,26 @@ public abstract class BaseMenu {
 
     public abstract int menuId();
 
-    protected boolean hasPermission(List<StdPermission> permissionVoList, int permissionUnit) {
+    protected boolean canDo(List<StdPermission> permissionVoList, int permissionUnit) {
         return permissionVoList.stream().filter(p -> p.getMenuId() == menuId())
                 .anyMatch(p -> (p.getPermission() & permissionUnit) == permissionUnit)
                 ;
     }
 
     public boolean canView(List<StdPermission> permissionVoList) {
-        return hasPermission(permissionVoList, Constants.PermissionUnit.VIEW);
+        return canDo(permissionVoList, Constants.PermissionUnit.VIEW);
     }
 
     public boolean canCreate(List<StdPermission> permissionVoList) {
-        return hasPermission(permissionVoList, Constants.PermissionUnit.CREATE);
+        return canDo(permissionVoList, Constants.PermissionUnit.CREATE);
     }
 
     public boolean canEdit(List<StdPermission> permissionVoList) {
-        return hasPermission(permissionVoList, Constants.PermissionUnit.EDIT);
+        return canDo(permissionVoList, Constants.PermissionUnit.EDIT);
     }
 
     public boolean canDelete(List<StdPermission> permissionVoList) {
-        return hasPermission(permissionVoList, Constants.PermissionUnit.DELETE);
+        return canDo(permissionVoList, Constants.PermissionUnit.DELETE);
     }
 
 }

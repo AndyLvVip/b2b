@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import uca.base.domain.StdStrDomain;
+import uca.base.user.StdPermission;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,6 +44,11 @@ public class Permission extends StdStrDomain {
 
     public void edit(Permission p) {
         setPermission(p.getPermission());
+    }
+
+
+    public StdPermission asStdPermission() {
+        return new StdPermission(getMenuId(), getPermission());
     }
 
 }

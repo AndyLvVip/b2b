@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StdPermission {
 
-    private int menuId;
+    private long menuId;
 
     private int permission;
 }

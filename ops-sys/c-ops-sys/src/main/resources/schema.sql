@@ -89,6 +89,7 @@ create table permission (
                             version int not null
 ) engine = InnoDB, charset = utf8mb4;
 
+
 insert into permission(id, role_id, menu_id, permission, created_on, created_by, updated_on, updated_by, version)
 values(uuid(), 'admin', 2, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1),
       (uuid(), 'admin', 3, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1),
@@ -116,7 +117,7 @@ values(uuid(), 'admin', 2, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', n
       (uuid(), 'admin', 30, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1),
       (uuid(), 'admin', 31, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1),
       (uuid(), 'admin', 33, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1),
-      (uuid(), 'admin', 34, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1),
+      (uuid(), 'admin', 34, 1 | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5), now(), 'admin', now(), 'admin', 1),
       (uuid(), 'admin', 35, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1),
       (uuid(), 'admin', 36, 1 | (1 << 1) | (1 << 2) | (1 << 3), now(), 'admin', now(), 'admin', 1)
 ;
@@ -202,6 +203,11 @@ values
 (uuid(), 33, 1, '查看', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 34, 1, '查看', now(), 'admin', now(), 'admin', 1),
+(uuid(), 34, 1 << 1, '创建', now(), 'admin', now(), 'admin', 1),
+(uuid(), 34, 1 << 2, '编辑', now(), 'admin', now(), 'admin', 1),
+(uuid(), 34, 1 << 3, '删除', now(), 'admin', now(), 'admin', 1),
+(uuid(), 34, 1 << 4, '查看权限', now(), 'admin', now(), 'admin', 1),
+(uuid(), 34, 1 << 5, '编辑权限', now(), 'admin', now(), 'admin', 1),
 
 (uuid(), 35, 1, '查看', now(), 'admin', now(), 'admin', 1),
 

@@ -8,6 +8,7 @@ import uca.auth.client.bs.vo.SecurityCodeReqVo;
 import uca.auth.client.bs.vo.SecurityCodeRespVo;
 import uca.auth.client.bs.vo.SecurityCodeVo;
 import uca.platform.StdStringUtils;
+import uca.platform.exception.InvalidSecurityCodeException;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +52,7 @@ public class SecurityCodeService {
             this.stringRedisTemplate.expire(genSecurityCodeKey(vo.getKey()), 0, TimeUnit.SECONDS);
         }
         if(StringUtils.isEmpty(vo.getValue()) || !Objects.equals(vo.getValue().toUpperCase(), expected)) {
-            throw new IllegalArgumentException("验证码错误");
+            throw new InvalidSecurityCodeException("验证码错误");
         }
     }
 }

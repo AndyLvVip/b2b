@@ -1,6 +1,7 @@
 subprojects {
     dependencies {
         implementation project(':util')
+        implementation project(':base:c-base')
         implementation platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}")
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-data-redis'

@@ -21,9 +21,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
+import uca.base.constant.Constants;
+import uca.base.user.StdPermission;
+import uca.base.user.StdSimpleUser;
 import uca.base.vo.SimplePageRequestVo;
 import uca.ops.sys.bs.CustomizationConfiguration;
+import uca.ops.sys.bs.menu.AccessControl;
 import uca.ops.sys.bs.repository.*;
+import uca.ops.sys.bs.service.PermissionService;
 import uca.ops.sys.domain.*;
 import uca.ops.sys.vo.RoleMenuVo;
 import uca.ops.sys.vo.UserRoleReqVo;
@@ -91,6 +96,12 @@ public class RoleControllerTest {
     @SpyBean
     MenuRepository menuRepository;
 
+    @Autowired
+    AccessControl accessControl;
+
+    @SpyBean
+    PermissionService permissionService;
+
     @Before
     public void setUp() {
         userInfoTokenServices.setRestTemplate(restTemplate);
@@ -120,10 +131,17 @@ public class RoleControllerTest {
         doReturn(roles).when(roleRepository).search(any(UserRoleReqVo.class), any(Pageable.class));
         doReturn(Arrays.asList(user)).when(opsUserFeignClient).fetchList(any(List.class));
         doReturn(Arrays.asList(userRole)).when(userRoleRepository).fetchList(any(List.class));
-        doReturn(CustomizationConfiguration.responseEntity(andy())).when(restTemplate).getForEntity(anyString(), any(Class.class));
 
         UserRoleReqVo vo = new UserRoleReqVo();
         vo.setRoleName("管理员");
+
+        StdPermission stdPermission = new StdPermission();
+        stdPermission.setPermission(Constants.PermissionUnit.VIEW);
+        stdPermission.setMenuId(accessControl.roleMenu.menuId());
+
+        StdSimpleUser andy = andy();
+        doReturn(Arrays.asList(stdPermission)).when(permissionService).fetchOwnStdPermission(andy.getId());
+        doReturn(CustomizationConfiguration.responseEntity(andy)).when(restTemplate).getForEntity(anyString(), any(Class.class));
 
         LinkedMultiValueMap<String, String> params = stdObjectMapper.convertValue(vo, new TypeReference<LinkedMultiValueMap<String, String>>() {});
         params.putAll(stdObjectMapper.convertValue(pageable, new TypeReference<LinkedMultiValueMap<String, String>>() {}));
@@ -182,7 +200,13 @@ public class RoleControllerTest {
         role.setName("测试角色");
         role.setRemark("测试使用的角色");
 
-        doReturn(CustomizationConfiguration.responseEntity(andy())).when(restTemplate).getForEntity(anyString(), any(Class.class));
+        StdSimpleUser andy = andy();
+
+        doReturn(CustomizationConfiguration.responseEntity(andy)).when(restTemplate).getForEntity(anyString(), any(Class.class));
+
+        doReturn(Arrays.asList(new StdPermission(accessControl.roleMenu.menuId(), Constants.PermissionUnit.CREATE)))
+                .when(permissionService).fetchOwnStdPermission(andy.getId());
+
         this.mockMvc.perform(post("/role")
                 .header("Authorization", "Bearer " + StdStringUtils.uuid())
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -210,9 +234,15 @@ public class RoleControllerTest {
         role.setRemark("变更后的测试角色备注");
         role.setVersion(1);
 
-        doReturn(CustomizationConfiguration.responseEntity(andy())).when(restTemplate).getForEntity(anyString(), any(Class.class));
+        StdSimpleUser andy = andy();
+
+        doReturn(CustomizationConfiguration.responseEntity(andy)).when(restTemplate).getForEntity(anyString(), any(Class.class));
         doReturn(role).when(roleRepository).forceFindById(role.getId());
         doNothing().when(roleRepository).update(any(Role.class), anyString());
+
+        doReturn(Arrays.asList(new StdPermission(accessControl.roleMenu.menuId(), Constants.PermissionUnit.EDIT)))
+        .when(permissionService).fetchOwnStdPermission(andy.getId())
+        ;
 
         this.mockMvc.perform(put("/role/{id}", role.getId())
                 .header("Authorization", "Bearer " + StdStringUtils.uuid())
@@ -241,7 +271,13 @@ public class RoleControllerTest {
         role.setId(StdStringUtils.uuid());
         role.setVersion(1);
 
-        doReturn(responseEntity(andy())).when(restTemplate).getForEntity(anyString(), any(Class.class));
+        StdSimpleUser andy = andy();
+
+        doReturn(responseEntity(andy)).when(restTemplate).getForEntity(anyString(), any(Class.class));
+
+        doReturn(Arrays.asList(new StdPermission(accessControl.roleMenu.menuId(), Constants.PermissionUnit.DELETE)))
+                .when(permissionService).fetchOwnStdPermission(andy.getId());
+
         doReturn(role).when(roleRepository).forceFindById(role.getId());
         doNothing().when(roleRepository).delete(any(Role.class));
 
@@ -306,7 +342,14 @@ public class RoleControllerTest {
 
         doReturn(Arrays.asList(menu, mn2)).when(menuRepository).findAll();
 
-        doReturn(responseEntity(andy())).when(restTemplate).getForEntity(anyString(), any(Class.class));
+        StdSimpleUser andy = andy();
+
+        doReturn(responseEntity(andy)).when(restTemplate).getForEntity(anyString(), any(Class.class));
+
+        doReturn(Arrays.asList(new StdPermission(accessControl.roleMenu.menuId(), AccessControl.RoleMenu.VIEW_PERMISSION)))
+                .when(permissionService)
+                .fetchOwnStdPermission(andy.getId())
+        ;
 
         this.mockMvc.perform(get("/role/{id}/permission", role.getId())
                 .header("Authorization", "Bearer " + StdStringUtils.uuid())
@@ -340,7 +383,14 @@ public class RoleControllerTest {
 
     @Test
     public void editPermissionForRole() throws Exception {
-        doReturn(responseEntity(andy())).when(restTemplate).getForEntity(anyString(), any(Class.class));
+
+        StdSimpleUser andy = andy();
+
+        doReturn(responseEntity(andy)).when(restTemplate).getForEntity(anyString(), any(Class.class));
+
+        doReturn(Arrays.asList(new StdPermission(accessControl.roleMenu.menuId(), AccessControl.RoleMenu.EDIT_PERMISSION)))
+                .when(permissionService)
+                .fetchOwnStdPermission(andy.getId());
 
         Role role = new Role();
         role.setVersion(1);
